@@ -24,7 +24,7 @@ public interface StaffDB_Interface {
      * @param  Staff the staff of the staff list
      * @return the staff requested
      */
-	Staff getAlbum(String staffID);
+	Staff getStaff(String staffID);
 	
     /**
      * This method add an album to the database. 
