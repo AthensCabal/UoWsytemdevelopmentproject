@@ -11,24 +11,24 @@ package CCCU.edu.hk.Accounts;
  */
 public class Students implements Accounts {
 
-    private String userName;
+    public String userName;
     private String password;
-    private String name;
-    private String EID;
-    private String role;
-    private String division;
-    private String programme;
-    private String STDEmail;
-    private String altEmail;
-    private int numOfApplication;
+    public String firstname;
+    public String lastname;
+    public String EID;
+    public String division;
+    public String programme;
+    public String STDEmail;
+    public String altEmail;
+    public int numOfApplication;
 
     public Students() {
 
         userName = "";
         password = null;
-        name = "";
+        firstname = "";
+        lastname = "";
         EID = "";
-        role = "Student";
         division = "";
         programme = "";
         STDEmail = "";
@@ -37,13 +37,13 @@ public class Students implements Accounts {
 
     }
 
-    public Students(String usr, String passwrd, String name, String EID, String role, int numApp) {
+    public Students(String usr, String passwrd, String firstname, String lastname, String EID, int numApp) {
 
         userName = usr;
         password = passwrd;
-        this.name = name;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.EID = EID;
-        this.role = role;
         numOfApplication = numApp;
 
     }
@@ -56,17 +56,15 @@ public class Students implements Accounts {
     }
 
     @Override
-    public String getName() {
+    public String getFirstName() {
 
-        return name;
+        return firstname;
 
     }
 
     @Override
-    public String getRole() {
-
-        return role;
-
+    public String getLastName() {
+        return lastname;
     }
 
     @Override
