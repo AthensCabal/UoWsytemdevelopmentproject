@@ -1,5 +1,8 @@
 package CCCU.edu.hk.StaffDB;
 
+import CCCU.edu.hk.Accounts.*;
+import java.util.List;
+
 /**
  * @version 1.0
  * @author Athenwer Caballero Calimbahin (5980276)
@@ -9,4 +12,31 @@ package CCCU.edu.hk.StaffDB;
  */
 public class StaffDB implements StaffDB_Interface {
     
+    
+    
+    
+    public int getStaffCount() {
+     return 0;   
+    }
+    
+    public List<String> getStaff(){
+        return null;
+    }
+    
+    public Staff getAlbum(String staffID){
+        return null;
+    }
+    
+    public void addStaff(Staff staff){
+        
+    }
+   
+    public void deleteStaff(String staffID){
+        
+    }
+    
+    
+    public void cleanup(){
+        
+    }
 }
