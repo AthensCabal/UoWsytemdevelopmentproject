@@ -21,20 +21,20 @@ public interface StaffDB_Interface {
 
     /**
      * This method gets the requested staff from the database.
-     * @param  Staff the staff of the staff list
+     * @param  staffID the staff ID of the staff list
      * @return the staff requested
      */
-	Staff getAlbum(String staffID);
+	Staff getStaff(String staffID);
 	
     /**
-     * This method add an album to the database. 
-     * @param staff the staff to be add
+     * This method add a staff to the database. 
+     * @param staff the staff to be added
      */
 	void addStaff(Staff staff);
 
     /**
      * This method delete a staff from the database. 
-     * @param  title the title of the album to be deleted
+     * @param  staffID the staff ID to be deleted
      */
 	void deleteStaff(String staffID);
 

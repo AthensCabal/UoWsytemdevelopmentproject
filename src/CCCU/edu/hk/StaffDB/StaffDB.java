@@ -148,7 +148,7 @@ public class StaffDB implements StaffDB_Interface {
         return size;
     }
 
-    public Staff getAlbum(String staffID) {
+    public Staff getStaff(String staffID) {
 
         try {
 
@@ -236,6 +236,7 @@ public class StaffDB implements StaffDB_Interface {
     }
 
     public void cleanup() {
+        
         try {
         conn.close();
         s.close();
