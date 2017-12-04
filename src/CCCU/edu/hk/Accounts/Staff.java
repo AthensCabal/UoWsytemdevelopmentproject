@@ -1,8 +1,9 @@
 package CCCU.edu.hk.Accounts;
 
 /**
- * Name:Staff
- * Description:A class that define the necessary attributes and methods for a Staff Object 
+ * Name:Staff Description:A class that define the necessary attributes and
+ * methods for a Staff Object
+ *
  * @version 1.0
  * @author Athenwer Caballero Calimbahin (5980276)
  * @author Manish Mall(5993945)
@@ -11,59 +12,68 @@ package CCCU.edu.hk.Accounts;
  */
 public class Staff implements Accounts {
 
-    private String userName;
+    public String userName;
     private String password;
-    private String name;
-    private String EID;
-    private String role;
-    
-    
-    public Staff(){
-        
+    public String firstname;
+    public String lastname;
+    public String EID;
+    public String CommitteeTitle;
+    public boolean isCommitteeMember;
+
+    public Staff() {
         userName = "";
-        password = null;
-        name = "";
+        password = "";
+        firstname = "";
+        lastname = "";
         EID = "";
-        role = "Student";
-        
-        
+        CommitteeTitle = "";
+        isCommitteeMember = false;
+
     }
-    public Staff(String usr, String passwrd , String name, String EID, String role){
-    
+
+    public Staff(String usr, String passwrd, String firstname, String lastname, String EID, String c_title, boolean isC_member) {
+
         userName = usr;
         password = passwrd;
-        this.name = name;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.EID = EID;
-        this.role = role;
-        
+        CommitteeTitle = c_title;
+        isCommitteeMember = isC_member;
+
     }
-    
+
     @Override
     public String getUserName() {
-        
+
         return userName;
-        
+
+    }
+
+    @Override
+    public String getFirstName() {
+
+        return firstname;
+
     }
     
     @Override
-    public String getName() {
-        
-        return name;
-        
+    public String getLastName() {
+        return lastname;
     }
-
-    @Override
-    public String getRole() {
-        
-        return role;
-        
-    }
-
+    
     @Override
     public String getEID() {
-        
+
         return EID;
-        
+
     }
     
+    public String GetCommitteeTitle(){
+        return CommitteeTitle;
+    }
+
+    public boolean CommitteeMemberCheck(){
+        return isCommitteeMember;
+    }
 }

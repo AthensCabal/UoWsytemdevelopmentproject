@@ -1,8 +1,9 @@
 package CCCU.edu.hk.Accounts;
 
 /**
- * Name:Students
- * Description:A class that define the necessary attributes and methods for a Student Object 
+ * Name:Students Description:A class that define the necessary attributes and
+ * methods for a Student Object
+ *
  * @version 1.0
  * @author Athenwer Caballero Calimbahin (5980276)
  * @author Manish Mall(5993945)
@@ -13,9 +14,9 @@ public class Students implements Accounts {
 
     private String userName;
     private String password;
-    private String name;
+    private String firstname;
+    private String lastname;
     private String EID;
-    private String role;
     private String level;
     private String division;
     private String programme;
@@ -29,9 +30,9 @@ public class Students implements Accounts {
 
         userName = "";
         password = null;
-        name = "";
+        firstname = "";
+        lastname = "";
         EID = "";
-        role = "Student";
         level = "";
         division = "";
         programme = "";
@@ -41,19 +42,33 @@ public class Students implements Accounts {
 
     }
 
-    public Students(String usr, String passwrd, String name, String EID, String role,String lvl,String div,String prog,String std,String alt) {
+    public Students(String usr, String passwrd, String firstname, String lastname, String EID, String lvl, String div, String prog, String std, String alt) {
 
         userName = usr;
         password = passwrd;
-        this.name = name;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.EID = EID;
-        this.role = role;
         level = lvl;
         division = div;
         programme = prog;
         STDEmail = std;
         ALTEmail = alt;
         numOfApplication = 0;
+
+    }
+
+    @Override
+    public String getFirstName() {
+
+        return firstname;
+
+    }
+
+    @Override
+    public String getLastName() {
+
+        return lastname;
 
     }
 
@@ -65,24 +80,16 @@ public class Students implements Accounts {
     }
 
     @Override
-    public String getName() {
-
-        return name;
-
-    }
-
-    @Override
-    public String getRole() {
-
-        return role;
-
-    }
-
-    @Override
     public String getEID() {
 
         return EID;
 
+    }
+    
+    public String getPassword(){
+    
+        return password;
+        
     }
 
     public void setNumOfApp() {
@@ -90,22 +97,22 @@ public class Students implements Accounts {
         numOfApplication++;
 
     }
-    
-    public void setUserName(String newName){
-    
+
+    public void setUserName(String newName) {
+
         userName = newName;
-        
+
     }
-    
-    public void setSTDEmail(String email){
-        
+
+    public void setSTDEmail(String email) {
+
         STDEmail = email;
-        
+
     }
-    
-    public void setALTEmail(String email){
-    
+
+    public void setALTEmail(String email) {
+
         ALTEmail = email;
-        
+
     }
 }

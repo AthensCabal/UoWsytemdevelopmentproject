@@ -19,7 +19,6 @@ public interface StaffDB_Interface {
      */
 	int getStaffCount();
 
-	
     /**
      * This method gets the requested staff from the database.
      * @param  Staff the staff of the staff list

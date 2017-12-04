@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<CCCUSTAFFLIST>
+<Staff>
+<StaffType>0</StaffType>
+<StaffID>0000000</StaffID>
+<FirstName>John</FirstName>
+<LastName>Smith</LastName>
+<Department>Department of Computer Science</Department>
+<CommitteeTitle>NULL</CommitteeTitle>
+</Staff>
+<Staff>
+<StaffType>1</StaffType>
+<StaffID>0000001</StaffID>
+<FirstName>Ben</FirstName>
+<LastName>Wong</LastName>
+<Department>Department of Computer Engineering</Department>
+<CommitteeTitle>Member</CommitteeTitle>
+</Staff>
+</CCCUSTAFFLIST>

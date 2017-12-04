@@ -22,13 +22,13 @@ public interface Accounts {
      *
      * @return Name
      */
-    String getName();
+    String getFirstName();
     
     /**
      *
-     * @return Role
+     * @return Name
      */
-    String getRole();
+    String getLastName();
     
     
     /**
