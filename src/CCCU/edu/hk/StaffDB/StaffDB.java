@@ -42,7 +42,7 @@ public class StaffDB implements StaffDB_Interface {
     Connection conn = null;
     Statement s;
     PreparedStatement ps;
-    ResultSet myAlbumresultset;
+    ResultSet rs;
 
     String answer;
 
@@ -135,8 +135,8 @@ public class StaffDB implements StaffDB_Interface {
         try {
 
             s.executeQuery("select StaffID from MyAlbums");
-            myAlbumresultset = s.getResultSet();
-            while (myAlbumresultset.next()) {
+            rs = s.getResultSet();
+            while (rs.next()) {
                 size++;
 
             }
@@ -154,26 +154,27 @@ public class StaffDB implements StaffDB_Interface {
 
             //first get all rows
             s.executeQuery("select * from MyAlbums");
-            myAlbumresultset = s.getResultSet();
-            while (myAlbumresultset.next()) {
+            rs = s.getResultSet();
+            while (rs.next()) {
 
                 //Step 1: Check which of the rows matches the title
-                if (staffID.equals(myAlbumresultset.getString("StaffID"))) {
+                if (staffID.equals(rs.getString("StaffID"))) {
 
                     //Step 2: Make Staff
                     boolean tempbool = false;
                     
                     //Checks if it is a committee member or not
-                    if (myAlbumresultset.getString("StaffType").equals("1")){
+                    if (rs.getString("StaffType").equals("1")){
                         tempbool = true;
                     }
                     
-                    Staff tempStaff = new Staff(myAlbumresultset.getString("StaffUser"),
-                            myAlbumresultset.getString("StaffPassword"),
-                            myAlbumresultset.getString("FirstName"),
-                            myAlbumresultset.getString("LastName"),
-                            myAlbumresultset.getString("StaffID"),
-                            myAlbumresultset.getString("CommitteeTitle"),
+                    Staff tempStaff = new Staff(rs.getString("StaffUser"),
+                            rs.getString("StaffPassword"),
+                            rs.getString("FirstName"),
+                            rs.getString("LastName"),
+                            rs.getString("StaffID"),
+                            rs.getString("Department"),
+                            rs.getString("CommitteeTitle"),
                             tempbool);
                     //return Staff
                     return tempStaff;
@@ -183,7 +184,7 @@ public class StaffDB implements StaffDB_Interface {
             }
 
         } catch (Throwable ex) {
-            System.out.println("Exception thrown at getAlbum():");
+            System.out.println("Exception thrown at getStaff():");
             ex.printStackTrace(System.out);
         }
         //Never used! This will cause NullPointerException
@@ -201,14 +202,17 @@ public class StaffDB implements StaffDB_Interface {
             ps.setString(1, String.valueOf(tempStaff.CommitteeMemberCheck()) );
             ps.setString(2, tempStaff.getEID());
             ps.setString(3, tempStaff.getUserName());
-            ps.setString(4, );
-            ps.setString(5, );
-            ps.setString(6, );
-            ps.setString(7, );
-            ps.setString(8, );
+            ps.setString(4, tempStaff.getPassword());
+            ps.setString(5, tempStaff.getFirstName());
+            ps.setString(6, tempStaff.getLastName());
+            ps.setString(7, tempStaff.getDepartment());
+            ps.setString(8, tempStaff.getCommitteeTitle());
+            
+            ps.executeUpdate();
             
         } catch (Throwable ex) {
-            //
+            System.out.println("Exception thrown at addStaff():");
+            ex.printStackTrace(System.out);
         }
         
         
@@ -216,9 +220,31 @@ public class StaffDB implements StaffDB_Interface {
 
     public void deleteStaff(String staffID) {
 
+        try {
+
+            PreparedStatement st = conn.prepareStatement("DELETE FROM StaffList WHERE StaffID = ?");
+            st.setString(1, staffID);
+            st.executeUpdate();
+        } catch (Throwable ex) {
+
+            System.out.println("Exception thrown at deleteStaff()");
+            ex.printStackTrace(System.out);
+
+        }
+        
+        
     }
 
     public void cleanup() {
-        //
+        try {
+        conn.close();
+        s.close();
+        ps.close();
+        rs.close();
+        
+        } catch (Throwable ex) {
+            System.out.println("Exception thrown at cleanup()");
+            ex.printStackTrace(System.out);
+        }
     }
 }
