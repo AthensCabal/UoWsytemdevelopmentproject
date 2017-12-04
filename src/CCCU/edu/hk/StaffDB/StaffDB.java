@@ -63,7 +63,7 @@ public class StaffDB implements StaffDB_Interface {
             //This creates a table
             s.execute(createTable);
 
-            //#ALBUM SQL INIT#
+            //#Staff SQL INIT#
             //THIS PART REPLACES COLLECTIONFACTORY ENTIRELY
             //THIS ADDS THE INFO FROM THE XML FILES INTO THE DATABASE
             try {
@@ -80,14 +80,14 @@ public class StaffDB implements StaffDB_Interface {
 
                 for (int i = 0; i < staffList.getLength(); i++) {
 
-                    Node cdNode = staffList.item(i);
+                    Node node = staffList.item(i);
 
                     ps = conn.prepareStatement("INSERT INTO StaffList(StaffType, StaffID, StaffUser, StaffPassword, FirstName, LastName, Department, CommitteeTitle) VALUES (?,?,?,?,?,?,?,?)");
 
                     //this is for checking if it is an element
-                    if (cdNode.getNodeType() == Node.ELEMENT_NODE) {
+                    if (node.getNodeType() == Node.ELEMENT_NODE) {
 
-                        Element element1 = (Element) cdNode;
+                        Element element1 = (Element) node;
                         ps.setString(1, element1.getElementsByTagName("StaffType").item(0).getTextContent().trim());
                         ps.setString(2, element1.getElementsByTagName("StaffID").item(0).getTextContent().trim());
                         ps.setString(3, element1.getElementsByTagName("StaffUser").item(0).getTextContent().trim());
@@ -134,7 +134,7 @@ public class StaffDB implements StaffDB_Interface {
         int size = 0;
         try {
 
-            s.executeQuery("select StaffID from MyAlbums");
+            s.executeQuery("select StaffID from StaffList");
             rs = s.getResultSet();
             while (rs.next()) {
                 size++;
@@ -153,7 +153,7 @@ public class StaffDB implements StaffDB_Interface {
         try {
 
             //first get all rows
-            s.executeQuery("select * from MyAlbums");
+            s.executeQuery("select * from StaffList");
             rs = s.getResultSet();
             while (rs.next()) {
 
