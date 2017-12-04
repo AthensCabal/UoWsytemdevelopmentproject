@@ -18,6 +18,7 @@ public class Staff implements Accounts {
     private String lastname;
     private String EID;
     private String CommitteeTitle;
+    private String Department;
     private boolean isCommitteeMember;
 
     public Staff() {
@@ -27,17 +28,19 @@ public class Staff implements Accounts {
         lastname = "";
         EID = "";
         CommitteeTitle = "";
+        Department = "";
         isCommitteeMember = false;
 
     }
 
-    public Staff(String usr, String passwrd, String firstname, String lastname, String EID, String c_title, boolean isC_member) {
+    public Staff(String usr, String passwrd, String firstname, String lastname, String EID, String dept, String c_title, boolean isC_member) {
 
         userName = usr;
         password = passwrd;
         this.firstname = firstname;
         this.lastname = lastname;
         this.EID = EID;
+        Department = dept;
         CommitteeTitle = c_title;
         isCommitteeMember = isC_member;
 
@@ -69,7 +72,15 @@ public class Staff implements Accounts {
 
     }
     
-    public String GetCommitteeTitle(){
+    public String getPassword() {
+        return password;
+    }
+    
+    public String getDepartment() {
+        return Department;
+    }
+    
+    public String getCommitteeTitle(){
         return CommitteeTitle;
     }
 
