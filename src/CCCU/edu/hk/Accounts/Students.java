@@ -16,10 +16,13 @@ public class Students implements Accounts {
     private String name;
     private String EID;
     private String role;
+    private String level;
     private String division;
     private String programme;
     private String STDEmail;
-    private String altEmail;
+    private String ALTEmail;
+    private long SGPA;
+    private long CGPA;
     private int numOfApplication;
 
     public Students() {
@@ -29,22 +32,28 @@ public class Students implements Accounts {
         name = "";
         EID = "";
         role = "Student";
+        level = "";
         division = "";
         programme = "";
         STDEmail = "";
-        altEmail = "";
+        ALTEmail = "";
         numOfApplication = 0;
 
     }
 
-    public Students(String usr, String passwrd, String name, String EID, String role, int numApp) {
+    public Students(String usr, String passwrd, String name, String EID, String role,String lvl,String div,String prog,String std,String alt) {
 
         userName = usr;
         password = passwrd;
         this.name = name;
         this.EID = EID;
         this.role = role;
-        numOfApplication = numApp;
+        level = lvl;
+        division = div;
+        programme = prog;
+        STDEmail = std;
+        ALTEmail = alt;
+        numOfApplication = 0;
 
     }
 
@@ -80,5 +89,23 @@ public class Students implements Accounts {
 
         numOfApplication++;
 
+    }
+    
+    public void setUserName(String newName){
+    
+        userName = newName;
+        
+    }
+    
+    public void setSTDEmail(String email){
+        
+        STDEmail = email;
+        
+    }
+    
+    public void setALTEmail(String email){
+    
+        ALTEmail = email;
+        
     }
 }
