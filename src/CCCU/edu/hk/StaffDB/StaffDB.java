@@ -19,9 +19,6 @@ public class StaffDB implements StaffDB_Interface {
      return 0;   
     }
     
-    public List<String> getStaff(){
-        return null;
-    }
     
     public Staff getAlbum(String staffID){
         return null;
