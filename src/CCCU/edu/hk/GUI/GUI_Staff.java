@@ -1,6 +1,8 @@
 package CCCU.edu.hk.GUI;
 
 /**
+ * Name:GUI_Staff
+ * Description: The staff will then use the GUI implementation here to access the system
  * @version 1.0
  * @author Athenwer Caballero Calimbahin (5980276)
  * @author Manish Mall(5993945)

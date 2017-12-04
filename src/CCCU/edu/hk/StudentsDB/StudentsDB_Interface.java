@@ -1,6 +1,8 @@
 package CCCU.edu.hk.StudentsDB;
 
 /**
+ * Name:StudentsDB_Interface
+ * Description:An interface implementation of the student data base class 
  * @version 1.0
  * @author Athenwer Caballero Calimbahin (5980276)
  * @author Manish Mall(5993945)

@@ -4,6 +4,8 @@ import CCCU.edu.hk.Accounts.*;
 import java.util.*;
 
 /**
+ * Name:StaffDB_Interface
+ * Description:An interface implementation of the Staff database class
  * @version 1.0
  * @author Athenwer Caballero Calimbahin (5980276)
  * @author Manish Mall(5993945)
