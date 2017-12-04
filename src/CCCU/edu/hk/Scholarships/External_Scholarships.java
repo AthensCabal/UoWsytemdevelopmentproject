@@ -5,6 +5,8 @@
  */
 package CCCU.edu.hk.Scholarships;
 
+import java.util.List;
+
 /**
  * Name:External_Scholarships
  * Description:Attributes and methods of External Scholarships that are provided at CCCU
@@ -15,5 +17,30 @@ package CCCU.edu.hk.Scholarships;
  * @author Rio, Cheung Hon Yin Nicolas (5632079)
  */
 public class External_Scholarships implements Scholarships {
+
+    @Override
+    public String getName() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getNumOfScholarships() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<String> getLevelApplicable() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<String> getDivisionApplicable() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<String> getProgrammeApplicable() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
