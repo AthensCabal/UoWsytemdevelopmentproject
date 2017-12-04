@@ -1,6 +1,8 @@
 package CCCU.edu.hk.Accounts;
 
 /**
+ * Name:Students
+ * Description:A class that define the necessary attributes and methods for a Student Object 
  * @version 1.0
  * @author Athenwer Caballero Calimbahin (5980276)
  * @author Manish Mall(5993945)

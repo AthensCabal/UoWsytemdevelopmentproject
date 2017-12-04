@@ -6,6 +6,8 @@
 package CCCU.edu.hk.Scholarships;
 
 /**
+ * Name:External_Scholarships
+ * Description:Attributes and methods of External Scholarships that are provided at CCCU
  * @version 1.0
  * @author Athenwer Caballero Calimbahin (5980276)
  * @author Manish Mall(5993945)

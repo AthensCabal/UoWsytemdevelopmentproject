@@ -1,6 +1,8 @@
 package CCCU.edu.hk.Accounts;
 
 /**
+ * Name: Accounts
+ * Description: Primarily used as an interface implementation for Students and Staff Class  
  * @version 1.0
  * @author Athenwer Caballero Calimbahin (5980276)
  * @author Manish Mall(5993945)
