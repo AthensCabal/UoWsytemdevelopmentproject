@@ -10,9 +10,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.*;
 
 /**
- * Name:StaffDB
- * Description:It acts as a middle layer between the staff data base and the GUI
- * by having methods within the class to do modification of existing data
+ * Name:StaffDB Description:It acts as a middle layer between the staff data
+ * base and the GUI by having methods within the class to do modification of
+ * existing data
+ *
  * @version 1.0
  * @author Athenwer Caballero Calimbahin (5980276)
  * @author Manish Mall(5993945)
@@ -20,17 +21,19 @@ import org.w3c.dom.*;
  * @author Rio, Cheung Hon Yin Nicolas (5632079)
  */
 public class StaffDB implements StaffDB_Interface {
-    
-     // define the driver to use 
+
+    // define the driver to use
     String driver = "org.apache.derby.jdbc.ClientDriver";
 
-    // the database name  
+    // the database name
     String dbName = "StaffList";
-    // define the Derby connection URL to use 
+    // define the Derby connection URL to use
     String connectionURL = "jdbc:derby://localhost:1527/" + dbName + ";create=true";
 
     String createTable = "CREATE TABLE StaffList (StaffType VARCHAR(1), "
             + "StaffID VARCHAR(9), "
+            + "StaffUser VARCHAR(256)"
+            + "StaffPassword VARCHAR(256)"
             + "FirstName VARCHAR(256), "
             + "LastName VARCHAR(256), "
             + "Department VARCHAR(256),"
@@ -54,9 +57,8 @@ public class StaffDB implements StaffDB_Interface {
             //Create a statement to issue simple commands.
             s = conn.createStatement();
 
-            //this truly deletes just incase the cleanup() fails to delete the first database            
+            //this truly deletes just incase the cleanup() fails to delete the first database
             DatabaseMetaData dbmd = conn.getMetaData();
-            
 
             //This creates a table
             s.execute(createTable);
@@ -80,7 +82,7 @@ public class StaffDB implements StaffDB_Interface {
 
                     Node cdNode = staffList.item(i);
 
-                    ps = conn.prepareStatement("INSERT INTO StaffList(StaffType, StaffID, FirstName, LastName, Department, CommitteeTitle) VALUES (?,?,?,?,?,?)");
+                    ps = conn.prepareStatement("INSERT INTO StaffList(StaffType, StaffID, StaffUser, StaffPassword, FirstName, LastName, Department, CommitteeTitle) VALUES (?,?,?,?,?,?,?,?)");
 
                     //this is for checking if it is an element
                     if (cdNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -88,15 +90,15 @@ public class StaffDB implements StaffDB_Interface {
                         Element element1 = (Element) cdNode;
                         ps.setString(1, element1.getElementsByTagName("StaffType").item(0).getTextContent().trim());
                         ps.setString(2, element1.getElementsByTagName("StaffID").item(0).getTextContent().trim());
-                        ps.setString(3, element1.getElementsByTagName("FirstName").item(0).getTextContent().trim());
-                        ps.setString(4, element1.getElementsByTagName("LastName").item(0).getTextContent().trim());
-                        ps.setString(5, element1.getElementsByTagName("Department").item(0).getTextContent().trim());
-                        ps.setString(6, element1.getElementsByTagName("CommitteeTitle").item(0).getTextContent().trim());
+                        ps.setString(3, element1.getElementsByTagName("StaffUser").item(0).getTextContent().trim());
+                        ps.setString(4, element1.getElementsByTagName("StaffPassword").item(0).getTextContent().trim());
+                        ps.setString(5, element1.getElementsByTagName("FirstName").item(0).getTextContent().trim());
+                        ps.setString(6, element1.getElementsByTagName("LastName").item(0).getTextContent().trim());
+                        ps.setString(7, element1.getElementsByTagName("Department").item(0).getTextContent().trim());
+                        ps.setString(8, element1.getElementsByTagName("CommitteeTitle").item(0).getTextContent().trim());
                         ps.executeUpdate();
                     }
                 }
-
-                
 
             } catch (Throwable e2) {
 
@@ -127,28 +129,96 @@ public class StaffDB implements StaffDB_Interface {
         }
 
     }
-    
-    
-    
+
     public int getStaffCount() {
-     return 0;   
+        int size = 0;
+        try {
+
+            s.executeQuery("select StaffID from MyAlbums");
+            myAlbumresultset = s.getResultSet();
+            while (myAlbumresultset.next()) {
+                size++;
+
+            }
+
+        } catch (Throwable e) {
+            System.out.println("Exception thrown at getCollectionSize():");
+            e.printStackTrace(System.out);
+        }
+        return size;
     }
-    
-    
-    public Staff getAlbum(String staffID){
+
+    public Staff getAlbum(String staffID) {
+
+        try {
+
+            //first get all rows
+            s.executeQuery("select * from MyAlbums");
+            myAlbumresultset = s.getResultSet();
+            while (myAlbumresultset.next()) {
+
+                //Step 1: Check which of the rows matches the title
+                if (staffID.equals(myAlbumresultset.getString("StaffID"))) {
+
+                    //Step 2: Make Staff
+                    boolean tempbool = false;
+                    
+                    //Checks if it is a committee member or not
+                    if (myAlbumresultset.getString("StaffType").equals("1")){
+                        tempbool = true;
+                    }
+                    
+                    Staff tempStaff = new Staff(myAlbumresultset.getString("StaffUser"),
+                            myAlbumresultset.getString("StaffPassword"),
+                            myAlbumresultset.getString("FirstName"),
+                            myAlbumresultset.getString("LastName"),
+                            myAlbumresultset.getString("StaffID"),
+                            myAlbumresultset.getString("CommitteeTitle"),
+                            tempbool);
+                    //return Staff
+                    return tempStaff;
+
+                }
+
+            }
+
+        } catch (Throwable ex) {
+            System.out.println("Exception thrown at getAlbum():");
+            ex.printStackTrace(System.out);
+        }
+        //Never used! This will cause NullPointerException
         return null;
     }
-    
-    public void addStaff(Staff staff){
+
+    public void addStaff(Staff staff) {
+
+        try {
+            
+            Staff tempStaff= staff;
+            
+            ps = conn.prepareStatement("INSERT INTO StaffList(StaffType, StaffID, StaffUser, StaffPassword, FirstName, LastName, Department, CommitteeTitle) VALUES (?,?,?,?,?,?,?,?)");
+            
+            ps.setString(1, String.valueOf(tempStaff.CommitteeMemberCheck()) );
+            ps.setString(2, tempStaff.getEID());
+            ps.setString(3, tempStaff.getUserName());
+            ps.setString(4, );
+            ps.setString(5, );
+            ps.setString(6, );
+            ps.setString(7, );
+            ps.setString(8, );
+            
+        } catch (Throwable ex) {
+            //
+        }
+        
         
     }
-   
-    public void deleteStaff(String staffID){
-        
+
+    public void deleteStaff(String staffID) {
+
     }
-    
-    
-    public void cleanup(){
+
+    public void cleanup() {
         //
     }
 }
