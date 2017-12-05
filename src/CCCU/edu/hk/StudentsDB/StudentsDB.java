@@ -8,6 +8,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,9 +20,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * Name:StudentsDB
- * Description:It acts as a middle layer between the student data base and the GUI
- * by having methods within the class to do modification of existing data
+ * Name:StudentsDB Description:It acts as a middle layer between the student
+ * data base and the GUI by having methods within the class to do modification
+ * of existing data
+ *
  * @version 1.0
  * @author Athenwer Caballero Calimbahin (5980276)
  * @author Manish Mall(5993945)
@@ -27,6 +31,7 @@ import org.w3c.dom.NodeList;
  * @author Rio, Cheung Hon Yin Nicolas (5632079)
  */
 public class StudentsDB implements StudentsDB_Interface {
+
     // define the driver to use
     String driver = "org.apache.derby.jdbc.ClientDriver";
 
@@ -34,15 +39,20 @@ public class StudentsDB implements StudentsDB_Interface {
     String dbName = "StudentsList";
     // define the Derby connection URL to use
     String connectionURL = "jdbc:derby://localhost:1527/" + dbName + ";create=true";
-
-    String createTable = "CREATE TABLE StudentsList (StudentsType VARCHAR(1), "
-            + "StudentsID VARCHAR(9), "
-            + "StudentsUser VARCHAR(256)"
-            + "StudentsPassword VARCHAR(256)"
-            + "FirstName VARCHAR(256), "
-            + "LastName VARCHAR(256), "
-            + "Department VARCHAR(256),"
-            + "CommitteeStudentsTitle VARCHAR(256) )";
+//StudentsUser,StudentsPassword,FirstName,LastName,StudentsID,StudentsEID,LevelOfStudy,Division,Programme,StudentsEmail,PrivateEmail,CGPA,Applied
+    String createTable = "CREATE TABLE StudentsList (StudentsUser VARCHAR(256), "
+            + "StudentsPassword VARCHAR(256), "
+            + "FirstName VARCHAR(256),"
+            + "LastName VARCHAR(256),"
+            + "StudentsID VARCHAR(256), "
+            + "StudentsEID VARCHAR(256), "
+            + "LevelOfStudy VARCHAR(256),"
+            + "Division VARCHAR(256),"
+            + "Programme VARCHAR(256),"
+            + "StudentsEmail VARCHAR(256),"
+            + "PrivateEmail VARCHAR(256),"
+            + "CGPA VARCHAR(10),"
+            + "Applied VARCHAR(256) )";
 
     Connection conn = null;
     Statement s;
@@ -87,25 +97,29 @@ public class StudentsDB implements StudentsDB_Interface {
 
                     Node node = StudentsList.item(i);
 
-                    //$$$$$$$$$$$$$$$$$$$$
-                    //ps = conn.prepareStatement("INSERT INTO StudentsList(StudentsType, StudentsID, StudentsUser, StudentsPassword, FirstName, LastName, Department, CommitteeTitle) VALUES (?,?,?,?,?,?,?,?)");
+                    ps = conn.prepareStatement("INSERT INTO StudentsList(StudentsUser,StudentsPassword,FirstName,LastName,StudentsID,StudentsEID,LevelOfStudy,Division,Programme,StudentsEmail,PrivateEmail,CGPA,Applied) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
                     //this is for checking if it is an element
                     if (node.getNodeType() == Node.ELEMENT_NODE) {
 
                         //$$$$$$$$$$$$$$$$$$$$
-                        /*
+                        //StudentsEmail,PrivateEmail,CGPA,Applied
                         Element element1 = (Element) node;
-                        ps.setString(1, element1.getElementsByTagName("StudentsType").item(0).getTextContent().trim());
-                        ps.setString(2, element1.getElementsByTagName("StudentsID").item(0).getTextContent().trim());
-                        ps.setString(3, element1.getElementsByTagName("StudentsUser").item(0).getTextContent().trim());
-                        ps.setString(4, element1.getElementsByTagName("StudentsPassword").item(0).getTextContent().trim());
-                        ps.setString(5, element1.getElementsByTagName("FirstName").item(0).getTextContent().trim());
-                        ps.setString(6, element1.getElementsByTagName("LastName").item(0).getTextContent().trim());
-                        ps.setString(7, element1.getElementsByTagName("Department").item(0).getTextContent().trim());
-                        ps.setString(8, element1.getElementsByTagName("CommitteeTitle").item(0).getTextContent().trim());
+                        ps.setString(1, element1.getElementsByTagName("Student User").item(0).getTextContent().trim());
+                        ps.setString(2, element1.getElementsByTagName("Student Password").item(0).getTextContent().trim());
+                        ps.setString(3, element1.getElementsByTagName("First Name").item(0).getTextContent().trim());
+                        ps.setString(4, element1.getElementsByTagName("Last Name").item(0).getTextContent().trim());
+                        ps.setString(5, element1.getElementsByTagName("Student ID").item(0).getTextContent().trim());
+                        ps.setString(6, element1.getElementsByTagName("Student EID").item(0).getTextContent().trim());
+                        ps.setString(7, element1.getElementsByTagName("Level Of Study").item(0).getTextContent().trim());
+                        ps.setString(8, element1.getElementsByTagName("Division").item(0).getTextContent().trim());
+                        ps.setString(9, element1.getElementsByTagName("Programme").item(0).getTextContent().trim());
+                        ps.setString(10, element1.getElementsByTagName("Student Email").item(0).getTextContent().trim());
+                        ps.setString(11, element1.getElementsByTagName("Private Email").item(0).getTextContent().trim());
+                        ps.setString(12, element1.getElementsByTagName("CGPA").item(0).getTextContent().trim());
+                        ps.setString(13, element1.getElementsByTagName("Applied List").item(0).getTextContent().trim());
                         ps.executeUpdate();
-                        */
+
                     }
                 }
 
@@ -171,27 +185,39 @@ public class StudentsDB implements StudentsDB_Interface {
                 //Step 1: Check which of the rows matches the title
                 if (StudentsID.equals(rs.getString("StudentsID"))) {
 
-                    
-                    
-                    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-                    /*
+//StudentsUser,StudentsPassword,FirstName,LastName,StudentsID,StudentsEID,LevelOfStudy,Division,Programme,StudentsEmail,PrivateEmail,CGPA,Applied
+                    String tempID = rs.getString("StudentsID");
+                    int ID = Integer.parseInt(tempID);
+
+                    String tempCGPA = rs.getString("CGPA");
+                    double cgpa = Double.parseDouble(tempCGPA);
+
+                    String tempApplied = rs.getString("Applied");
+                    //"\n" acts as the delimitter
+                    String[] partsApplied = tempApplied.split("\n");
+                    for (int i = 0; i < partsApplied.length; i++) {
+                        partsApplied[i] = partsApplied[i].trim();
+                    }
+
+                    List passApplied = Arrays.asList(partsApplied);
+
                     Students tempStudents = new Students(rs.getString("StudentsUser"),
                             rs.getString("StudentsPassword"),
                             rs.getString("FirstName"),
                             rs.getString("LastName"),
-                            rs.getString("StudentsID"),
-                            rs.getString("Department"),
-                            rs.getString("CommitteeTitle"),
-                            tempbool);
+                            rs.getString("StudentsEID"),
+                            ID,
+                            rs.getString("LevelOfStudy"),
+                            rs.getString("Division"),
+                            rs.getString("Programme"),
+                            rs.getString("StudentsEmail"),
+                            rs.getString("PrivateEmail"),
+                            cgpa,
+                            passApplied
+                    );
 
-                    */
-                    
-                    
-                    //return Students
-                    //return tempStudents;
-
+                    return tempStudents;
                 }
-
             }
 
         } catch (Throwable ex) {
@@ -206,36 +232,54 @@ public class StudentsDB implements StudentsDB_Interface {
     public void addStudent(Students Students) {
 
         try {
-            
-            Students tempStudents= Students;
-            
-            
-            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-            //ps = conn.prepareStatement("INSERT INTO StudentsList(StudentsType, StudentsID, StudentsUser, StudentsPassword, FirstName, LastName, Department, CommitteeTitle) VALUES (?,?,?,?,?,?,?,?)");
-            
-            
-            
-            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-            //ps.setString(1, String.valueOf(tempStudents.CommitteeMemberCheck()) );
-            
-            
+            Students tempStudents = Students;
+
+            ps = conn.prepareStatement("INSERT INTO StudentsList(StudentsUser,StudentsPassword,FirstName,LastName,StudentsID,StudentsEID,LevelOfStudy,Division,Programme,StudentsEmail,PrivateEmail,CGPA,Applied) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+
+            ps.setString(1, String.valueOf(tempStudents.getUserName()));
+            ps.setString(2, String.valueOf(tempStudents.getPassword()));
+            ps.setString(3, String.valueOf(tempStudents.getFirstName()));
+            ps.setString(4, String.valueOf(tempStudents.getLastName()));
+            ps.setString(5, String.valueOf(tempStudents.getSID()));
+            ps.setString(6, String.valueOf(tempStudents.getEID()));
+            ps.setString(7, String.valueOf(tempStudents.getLevel()));
+            ps.setString(8, String.valueOf(tempStudents.getDivsion()));
+            ps.setString(9, String.valueOf(tempStudents.getProgramme()));
+            ps.setString(10, String.valueOf(tempStudents.getSTDEmail()));
+            ps.setString(11, String.valueOf(tempStudents.getALTEmail()));
+            ps.setString(12, String.valueOf(tempStudents.getCGPA()));
+            //Compile applied scholarships(IDs) into a single string file and use "\n" as delimiter
+            String applied = "";
+            Iterator itr = tempStudents.getApplied().iterator();
+            while (itr.hasNext()) {
+                applied += (String) itr.next() + "\n";
+            }
+
+            ps.setString(13, String.valueOf(applied));
             ps.executeUpdate();
-            
+
         } catch (Throwable ex) {
             System.out.println("Exception thrown at addStudents():");
             ex.printStackTrace(System.out);
         }
-        
-        
+
     }
 
     @Override
     public void deleteStudent(String StudentsID) {
-
+        String SQL = "SELECT StudentsUser, StudentsPassword, FirstName, LastName, StudentsID, StudentsEID, LevelOfStudy, Division, Programme, StudentsEmail, PrivateEmail, CGPA, Applied FROM StudentsList";
         try {
 
-            PreparedStatement st = conn.prepareStatement("DELETE FROM StudentsList WHERE StudentsID = ?");
-            st.setString(1, StudentsID);
+            PreparedStatement st = conn.prepareStatement(SQL, ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            rs = st.executeQuery();
+            while(rs.next()){
+                
+                if(rs.getString("StudentsID").trim().equals(StudentsID)){
+                    rs.deleteRow();
+                    break;
+                }
+            }   
             st.executeUpdate();
         } catch (Throwable ex) {
 
@@ -243,18 +287,17 @@ public class StudentsDB implements StudentsDB_Interface {
             ex.printStackTrace(System.out);
 
         }
-        
-        
+
     }
 
     public void cleanup() {
-        
+
         try {
-        conn.close();
-        s.close();
-        ps.close();
-        rs.close();
-        
+            conn.close();
+            s.close();
+            ps.close();
+            rs.close();
+
         } catch (Throwable ex) {
             System.out.println("Exception thrown at cleanup()");
             ex.printStackTrace(System.out);

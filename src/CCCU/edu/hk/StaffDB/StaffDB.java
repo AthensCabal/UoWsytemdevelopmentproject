@@ -29,15 +29,20 @@ public class StaffDB implements StaffDB_Interface {
     String dbName = "StaffList";
     // define the Derby connection URL to use
     String connectionURL = "jdbc:derby://localhost:1527/" + dbName + ";create=true";
-
-    String createTable = "CREATE TABLE StaffList (StaffType VARCHAR(1), "
-            + "StaffID VARCHAR(9), "
-            + "StaffUser VARCHAR(256)"
-            + "StaffPassword VARCHAR(256)"
-            + "FirstName VARCHAR(256), "
-            + "LastName VARCHAR(256), "
-            + "Department VARCHAR(256),"
-            + "CommitteeStaffTitle VARCHAR(256) )";
+//userName,password,firstName,lastName,StaffEID,StaffID,Division,Title,Status,StaffEmail,CommitteeMember,CommitteeTitle
+    String createTable = "CREATE TABLE StaffList (userName VARCHAR(1), "
+            + "password VARCHAR(9), "
+            + "firstName VARCHAR(256),"
+            + "lastName VARCHAR(256),"
+            + "StaffEID VARCHAR(256), "
+            + "StaffID VARCHAR(256), "
+            + "Division VARCHAR(256),"
+            + "Title VARCHAR(256)"
+            + "Status VARCHAR(256),"
+            + "StaffEmail VARCHAR(256),"
+            + "CommitteeMember VARCHAR(10),"
+            + "CommitteeTitle VARCHAR(256)"
+            + ")";
 
     Connection conn = null;
     Statement s;
@@ -82,20 +87,25 @@ public class StaffDB implements StaffDB_Interface {
 
                     Node node = staffList.item(i);
 
-                    ps = conn.prepareStatement("INSERT INTO StaffList(StaffType, StaffID, StaffUser, StaffPassword, FirstName, LastName, Department, CommitteeTitle) VALUES (?,?,?,?,?,?,?,?)");
+                    ps = conn.prepareStatement("INSERT INTO StaffList(userName,password,firstName,lastName,StaffEID,StaffID,Division,Title,Status,StaffEmail,CommitteeMember,CommitteeTitle) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
 
                     //this is for checking if it is an element
                     if (node.getNodeType() == Node.ELEMENT_NODE) {
 
+                        //userName,password,firstName,lastName,StaffEID,StaffID,Division,Status,StaffEmail,CommitteeMember,CommitteeTitle
                         Element element1 = (Element) node;
-                        ps.setString(1, element1.getElementsByTagName("StaffType").item(0).getTextContent().trim());
-                        ps.setString(2, element1.getElementsByTagName("StaffID").item(0).getTextContent().trim());
-                        ps.setString(3, element1.getElementsByTagName("StaffUser").item(0).getTextContent().trim());
-                        ps.setString(4, element1.getElementsByTagName("StaffPassword").item(0).getTextContent().trim());
-                        ps.setString(5, element1.getElementsByTagName("FirstName").item(0).getTextContent().trim());
-                        ps.setString(6, element1.getElementsByTagName("LastName").item(0).getTextContent().trim());
-                        ps.setString(7, element1.getElementsByTagName("Department").item(0).getTextContent().trim());
-                        ps.setString(8, element1.getElementsByTagName("CommitteeTitle").item(0).getTextContent().trim());
+                        ps.setString(1, element1.getElementsByTagName("User Name").item(0).getTextContent().trim());
+                        ps.setString(2, element1.getElementsByTagName("Password").item(0).getTextContent().trim());
+                        ps.setString(3, element1.getElementsByTagName("First Name").item(0).getTextContent().trim());
+                        ps.setString(4, element1.getElementsByTagName("Last Name").item(0).getTextContent().trim());
+                        ps.setString(5, element1.getElementsByTagName("Staff EID").item(0).getTextContent().trim());
+                        ps.setString(6, element1.getElementsByTagName("Staff ID").item(0).getTextContent().trim());
+                        ps.setString(7, element1.getElementsByTagName("Division").item(0).getTextContent().trim());
+                        ps.setString(8, element1.getElementsByTagName("Title").item(0).getTextContent().trim());
+                        ps.setString(9, element1.getElementsByTagName("Status").item(0).getTextContent().trim());
+                        ps.setString(10, element1.getElementsByTagName("Staff Email").item(0).getTextContent().trim());
+                        ps.setString(11, element1.getElementsByTagName("Committee Member").item(0).getTextContent().trim());
+                        ps.setString(12, element1.getElementsByTagName("Committee Title").item(0).getTextContent().trim());
                         ps.executeUpdate();
                     }
                 }
@@ -138,7 +148,6 @@ public class StaffDB implements StaffDB_Interface {
             rs = s.getResultSet();
             while (rs.next()) {
                 size++;
-
             }
 
         } catch (Throwable e) {
@@ -150,32 +159,38 @@ public class StaffDB implements StaffDB_Interface {
 
     public Staff getStaff(String staffID) {
 
+        String SQL = "SELECT userName, password, firstName, lastName, StaffEID, StaffID, Division, Title, Status, StaffEmail, CommitteeMember, CommitteeTitle FROM StaffList";
         try {
 
-            //first get all rows
-            s.executeQuery("select * from StaffList");
-            rs = s.getResultSet();
+            ps = conn.prepareStatement(SQL);
+
+            rs = ps.executeQuery();
             while (rs.next()) {
-
                 //Step 1: Check which of the rows matches the title
-                if (staffID.equals(rs.getString("StaffID"))) {
+                if (rs.getString("StaffID").equals(staffID)) {
 
-                    //Step 2: Make Staff
-                    boolean tempbool = false;
-                    
-                    //Checks if it is a committee member or not
-                    if (rs.getString("StaffType").equals("1")){
-                        tempbool = true;
+                    String tempSID = rs.getString("staffID");
+                    int sid = Integer.parseInt(tempSID);
+
+                    boolean CommitteeMember = false;
+                    if (rs.getString("CommitteeMember").trim().equals("True")) {
+                        CommitteeMember = true;
                     }
-                    
-                    Staff tempStaff = new Staff(rs.getString("StaffUser"),
-                            rs.getString("StaffPassword"),
-                            rs.getString("FirstName"),
-                            rs.getString("LastName"),
-                            rs.getString("StaffID"),
-                            rs.getString("Department"),
+
+                    //userName,password,firstName,lastName,StaffEID,StaffID,Division,Status,StaffEmail,CommitteeMember,CommitteeTitle
+                    Staff tempStaff = new Staff(rs.getString("userName"),
+                            rs.getString("password"),
+                            rs.getString("firstName"),
+                            rs.getString("lastName"),
+                            sid,
+                            rs.getString("StaffEID"),
+                            rs.getString("Division"),
+                            rs.getString("Title"),
+                            rs.getString("Status"),
+                            rs.getString("StaffEmail"),
                             rs.getString("CommitteeTitle"),
-                            tempbool);
+                            CommitteeMember
+                    );
                     //return Staff
                     return tempStaff;
 
@@ -194,55 +209,80 @@ public class StaffDB implements StaffDB_Interface {
     public void addStaff(Staff staff) {
 
         try {
-            
-            Staff tempStaff= staff;
-            
-            ps = conn.prepareStatement("INSERT INTO StaffList(StaffType, StaffID, StaffUser, StaffPassword, FirstName, LastName, Department, CommitteeTitle) VALUES (?,?,?,?,?,?,?,?)");
-            
-            ps.setString(1, String.valueOf(tempStaff.CommitteeMemberCheck()) );
-            ps.setString(2, tempStaff.getEID());
-            ps.setString(3, tempStaff.getUserName());
-            ps.setString(4, tempStaff.getPassword());
-            ps.setString(5, tempStaff.getFirstName());
-            ps.setString(6, tempStaff.getLastName());
-            ps.setString(7, tempStaff.getDepartment());
-            ps.setString(8, tempStaff.getCommitteeTitle());
-            
+
+            Staff tempStaff = staff;
+
+            ps = conn.prepareStatement("INSERT INTO StaffList(userName,password,firstName,lastName,StaffEID,StaffID,Division,Title,Status,StaffEmail,CommitteeMember,CommitteeTitle) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+
+            ps.setString(1, tempStaff.getUserName());
+            ps.setString(2, tempStaff.getPassword());
+            ps.setString(3, tempStaff.getFirstName());
+            ps.setString(4, tempStaff.getLastName());
+            ps.setString(5, tempStaff.getEID());
+            ps.setString(6, tempStaff.getEID());
+
+            int SID = tempStaff.getSID();
+            String SIDString = Integer.toString(SID);
+            ps.setString(7, SIDString);
+
+            ps.setString(8, tempStaff.getTitle());
+            ps.setString(9, tempStaff.getStatus());
+            ps.setString(10, tempStaff.getSTFFEmail());
+
+            boolean tempCom = tempStaff.CommitteeMemberCheck();
+            String bool = "";
+            if (tempCom == true) {
+                bool = "true";
+            } else {
+                bool = "false";
+            }
+            ps.setString(11, bool);
+
+            ps.setString(12, tempStaff.getCommitteeTitle());
+
             ps.executeUpdate();
-            
+
         } catch (Throwable ex) {
             System.out.println("Exception thrown at addStaff():");
             ex.printStackTrace(System.out);
         }
-        
-        
+
     }
 
     public void deleteStaff(String staffID) {
 
+        String SQL = "SELECT userName,password,firstName,lastName,StaffEID,StaffID,Division,Title,Status,StaffEmail,CommitteeMember,CommitteeTitle FROM StaffList";
+
         try {
 
-            PreparedStatement st = conn.prepareStatement("DELETE FROM StaffList WHERE StaffID = ?");
-            st.setString(1, staffID);
-            st.executeUpdate();
+            PreparedStatement st = conn.prepareStatement(SQL, ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            rs = st.executeQuery();
+            while(rs.next()){
+            
+                if(rs.getString("StaffID").trim().equals(staffID)){
+                    
+                    rs.deleteRow();
+                    break;
+                }
+                
+            }
         } catch (Throwable ex) {
 
             System.out.println("Exception thrown at deleteStaff()");
             ex.printStackTrace(System.out);
 
         }
-        
-        
+
     }
 
     public void cleanup() {
-        
+
         try {
-        conn.close();
-        s.close();
-        ps.close();
-        rs.close();
-        
+            conn.close();
+            s.close();
+            ps.close();
+            rs.close();
+
         } catch (Throwable ex) {
             System.out.println("Exception thrown at cleanup()");
             ex.printStackTrace(System.out);

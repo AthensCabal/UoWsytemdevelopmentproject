@@ -15,7 +15,9 @@ public interface Scholarships {
     
     public String getName();
     
-    public int getNumOfScholarships();
+    public String getID();
+    
+    public String getDescription();
     
     //Returns a list(Strings) of level(s) of studies that is/are eligble for it
     public List<String> getLevelApplicable();
