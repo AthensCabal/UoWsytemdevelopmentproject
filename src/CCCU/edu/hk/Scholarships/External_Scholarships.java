@@ -23,7 +23,6 @@ public class External_Scholarships implements Scholarships {
 
     /**
      * External_Scholarships
-     *
      * @param name
      * @param ID
      * @param organisation
@@ -48,6 +47,10 @@ public class External_Scholarships implements Scholarships {
     private List<String> level;
     private List<String> division;
     private List<String> programme;
+    private List waitList;
+    private List recommendedList;
+    private List acceptedList;
+    private List rejectedList;
     private double CGPARequirements;
 
     public External_Scholarships() {
@@ -64,11 +67,15 @@ public class External_Scholarships implements Scholarships {
         level = new ArrayList();
         division = new ArrayList();
         programme = new ArrayList();
+        waitList = new ArrayList();
+        recommendedList = new ArrayList();
+        acceptedList = new ArrayList();
+        rejectedList = new ArrayList();
         CGPARequirements = -1.0;
 
     }
 
-    public External_Scholarships(String nam, String id, String org, String des,double amt, int maxAwd, int maxApp, Date ICO, Date FCO, double cgpa, List<String> lvl, List<String> div, List<String> prgm) {
+    public External_Scholarships(String nam, String id, String org, String des,double amt, int maxAwd, int maxApp, Date ICO, Date FCO, double cgpa, List<String> lvl, List<String> div, List<String> prgm,List wait,List rec,List acpt,List rej) {
 
         name = nam;
         ID = id;
@@ -83,6 +90,10 @@ public class External_Scholarships implements Scholarships {
         level = lvl;
         division = div;
         programme = prgm;
+        waitList = wait;
+        recommendedList = rec;
+        acceptedList = acpt;
+        rejectedList = rej;  
 
     }
 
@@ -170,6 +181,30 @@ public class External_Scholarships implements Scholarships {
 
     }
 
+    public List getWaitList(){
+    
+        return waitList;
+        
+    }
+    
+    public List getRecommendedList(){
+    
+        return recommendedList;
+        
+    }
+    
+    public List getAcceptedList(){
+    
+        return acceptedList;
+        
+    }
+    
+    public List getRejectedList(){
+    
+        return rejectedList;
+        
+    }
+    
     public void setName(String nam) {
 
         name = nam;
@@ -247,5 +282,29 @@ public class External_Scholarships implements Scholarships {
         CGPARequirements = cgpa;
 
     }
+    
+    public void setWaitList(int SID){
+    
+        waitList.add(SID);
+    
+    }
+    
+    public void setRecommendedList(int SID){
+    
+        recommendedList.add(SID);
+        
+    }
+    
+    public void setAcceptedList(int SID){
+    
+        acceptedList.add(SID);
+        
+    }
 
+    public void setRejectedList(int SID){
+    
+        rejectedList.add(SID);
+        
+    }
+    
 }

@@ -32,6 +32,7 @@ public class Internal_Scholarships implements Scholarships {
      */
     private String name;
     private String ID;
+    private String organisation;
     private String Description;
     private double Amount;
     private int maxAwardees;
@@ -41,6 +42,10 @@ public class Internal_Scholarships implements Scholarships {
     private List<String> level;
     private List<String> division;
     private List<String> programme;
+    private List waitList;
+    private List recommendedList;
+    private List acceptedList;
+    private List rejectedList;
     private double CGPARequirements;
 
     public Internal_Scholarships() {
@@ -48,6 +53,7 @@ public class Internal_Scholarships implements Scholarships {
         name = "";
         ID = "";
         Description = "";
+        organisation = "";
         Amount = -1.0;
         maxAwardees = -1;
         maxApplicants = -1;
@@ -56,14 +62,19 @@ public class Internal_Scholarships implements Scholarships {
         level = new ArrayList();
         division = new ArrayList();
         programme = new ArrayList();
+        waitList = new ArrayList();
+        recommendedList = new ArrayList();
+        acceptedList = new ArrayList();
+        rejectedList = new ArrayList();
         CGPARequirements = -1.0;
 
     }
 
-    public Internal_Scholarships(String nam, String id, String org, String des,double amt ,int maxAwd, int maxApp, Date ICO, Date FCO, double cgpa, List<String> lvl, List<String> div, List<String> prgm) {
+    public Internal_Scholarships(String nam, String id, String org, String des, double amt, int maxAwd, int maxApp, Date ICO, Date FCO, double cgpa, List<String> lvl, List<String> div, List<String> prgm, List wait, List rec, List acpt, List rej) {
 
         name = nam;
         ID = id;
+        organisation = org;
         Description = des;
         Amount = amt;
         maxAwardees = maxAwd;
@@ -74,6 +85,10 @@ public class Internal_Scholarships implements Scholarships {
         level = lvl;
         division = div;
         programme = prgm;
+        waitList = wait;
+        recommendedList = rec;
+        acceptedList = acpt;
+        rejectedList = rej;
 
     }
 
@@ -118,43 +133,73 @@ public class Internal_Scholarships implements Scholarships {
         return programme;
 
     }
-    
-    public double getAmount(){
-    
-        return Amount;
-        
+
+    public String getOrganisation() {
+
+        return organisation;
+
     }
 
-    public int getMaxAwardees(){
-    
+    public double getAmount() {
+
+        return Amount;
+
+    }
+
+    public int getMaxAwardees() {
+
         return maxAwardees;
-    
+
     }
-    
-    public int getMaxApplicants(){
-    
+
+    public int getMaxApplicants() {
+
         return maxApplicants;
-        
+
     }
-    
-    public Date getInitialCutOff(){
-    
+
+    public Date getInitialCutOff() {
+
         return initialCutOff;
-        
+
     }
-    
-    public Date getFinalCutOff(){
-    
+
+    public Date getFinalCutOff() {
+
         return finalCutOff;
-        
+
     }
-    
-    public double getCGPA(){
-    
+
+    public double getCGPA() {
+
         return CGPARequirements;
-    
+
     }
-    
+
+    public List getWaitList() {
+
+        return waitList;
+
+    }
+
+    public List getRecommendedList() {
+
+        return recommendedList;
+
+    }
+
+    public List getAcceptedList() {
+
+        return acceptedList;
+
+    }
+
+    public List getRejectedList() {
+
+        return rejectedList;
+
+    }
+
     public void setName(String nam) {
 
         name = nam;
@@ -167,18 +212,24 @@ public class Internal_Scholarships implements Scholarships {
 
     }
 
+    public void setOrganisation(String org) {
+
+        organisation = org;
+
+    }
+
     public void setDescription(String des) {
 
         Description = des;
 
     }
 
-    public void setAmount(double amt){
-    
+    public void setAmount(double amt) {
+
         Amount = amt;
-    
+
     }
-    
+
     public void setMaxAwardees(int max) {
 
         maxAwardees = max;
@@ -197,33 +248,57 @@ public class Internal_Scholarships implements Scholarships {
 
     }
 
-    public void finalCutOff(Date dd) {
+    public void setFinalCutOff(Date dd) {
 
         finalCutOff = dd;
 
     }
 
-    public void level(String lvl) {
+    public void setLevel(String lvl) {
 
         level.add(lvl);
 
     }
 
-    public void division(String div) {
+    public void setDivision(String div) {
 
         division.add(div);
 
     }
 
-    public void programme(String prgm) {
+    public void setProgramme(String prgm) {
 
         programme.add(prgm);
 
     }
 
-    public void CGPARequirements(double cgpa) {
+    public void setCGPARequirements(double cgpa) {
 
         CGPARequirements = cgpa;
+
+    }
+
+    public void setWaitList(int SID) {
+
+        waitList.add(SID);
+
+    }
+
+    public void setRecommendedList(int SID) {
+
+        recommendedList.add(SID);
+
+    }
+
+    public void setAcceptedList(int SID) {
+
+        acceptedList.add(SID);
+
+    }
+
+    public void setRejectedList(int SID) {
+
+        rejectedList.add(SID);
 
     }
 }
