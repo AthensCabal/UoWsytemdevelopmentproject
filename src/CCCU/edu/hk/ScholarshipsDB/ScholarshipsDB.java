@@ -16,6 +16,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
+ * 
  * Name:ScholarshipsDB
  * Description:It acts as a middle layer between the scholarship data base and the GUI
  * by having methods within the class to do modification of existing data
