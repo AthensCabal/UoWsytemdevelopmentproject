@@ -9,13 +9,11 @@
  */
 
 
-import CCCU.edu.hk.GUI.*;
+import CCCU.edu.hk.GUI.mainFrame;
 
 public class ScholarshipSystem {
     
     public static void main(String [] args){
-    
-        
-    
+        mainFrame test = new mainFrame();
     }
 }

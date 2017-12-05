@@ -1,4 +1,4 @@
-
+package CCCU.edu.hk.GUI;
 import javax.swing.JFrame;
 
 /*
