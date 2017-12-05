@@ -9,7 +9,7 @@
  */
 
 
-import CCCU.edu.hk.GUI.mainFrame;
+import CCCU.edu.hk.GUI.*;
 
 public class ScholarshipSystem {
     
