@@ -10,10 +10,17 @@
 
 
 import CCCU.edu.hk.GUI.*;
+import CCCU.edu.hk.ScholarshipsDB.*;
+import CCCU.edu.hk.StaffDB.*;
+import CCCU.edu.hk.StudentsDB.*;
 
 public class ScholarshipSystem {
     
     public static void main(String [] args){
+        StaffDB staffDataBase  = new StaffDB();
+        StudentsDB studentsBase = new StudentsDB();
+        ScholarshipsDB scholarshipDataBase = new ScholarshipsDB();
         mainFrame test = new mainFrame();
+        test.setVisible(true);
     }
 }
