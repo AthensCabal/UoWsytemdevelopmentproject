@@ -289,7 +289,7 @@ public class StudentsDB implements StudentsDB_Interface {
                     break;
                 }
             }   
-            st.executeUpdate();
+            
         } catch (Throwable ex) {
 
             System.out.println("Exception thrown at deleteStudents()");
