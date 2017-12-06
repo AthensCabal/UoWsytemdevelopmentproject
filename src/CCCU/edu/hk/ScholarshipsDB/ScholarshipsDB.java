@@ -62,8 +62,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
             + "recommendedList VARCHAR(256) NOT NULL, "
             + "acceptedList VARCHAR(256) NOT NULL, "
             + "rejectedList VARCHAR(256) NOT NULL, "
-            + "CGPARequirements VARCHAR(256) NOT NULL "
-            + ")";
+            + "CGPARequirements VARCHAR(256) NOT NULL )";
 
     Connection conn = null;
     Statement s;
@@ -95,13 +94,10 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
             }
 
             //This creates a table
-            ps = conn.prepareStatement(createTable);
+            s.execute(createTable);
+          
            
-            
-            
-            ps.executeUpdate();
-           
-            ps = conn.prepareStatement("INSERT INTO ScholarshipsList(Name,ID,Organisation,Description,Amount,maxAwardees,maxApplicants,initialCuttOff,finalCutOff,Level,Division,Programme,waitList,recommendedList,acceptedList,rejectedList,CGPARequirements) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            ps = conn.prepareStatement("INSERT INTO ScholarshipsList(Name,ID,Organisation,Description,Amount,maxAwardees,maxApplicants,initialCutOff,finalCutOff,Level,Division,Programme,waitList,recommendedList,acceptedList,rejectedList,CGPARequirements) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             //#Scholarships SQL INIT#
             //THIS PART REPLACES COLLECTIONFACTORY ENTIRELY
@@ -366,7 +362,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
 //maxAwardees,maxApplicants,initialCutOff,finalCutOff,Level,Division,Programme
 //waitList,recommendedList,acceptedList,rejectedList,CGPARequirements
             //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-            ps = conn.prepareStatement("INSERT INTO ScholarshipsList(Name,ID,Organisation,Description,Amount,maxAwardees,maxApplicants,initialCuttOff,finalCutOff,Level,Division,Programme,waitList,recommendedList,acceptedList,rejectedList,CGPARequirements) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            ps = conn.prepareStatement("INSERT INTO ScholarshipsList(Name,ID,Organisation,Description,Amount,maxAwardees,maxApplicants,initialCutOff,finalCutOff,Level,Division,Programme,waitList,recommendedList,acceptedList,rejectedList,CGPARequirements) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             if (tempScholarships instanceof External_Scholarships) {
                 Internal_Scholarships ex = (Internal_Scholarships) tempScholarships;
