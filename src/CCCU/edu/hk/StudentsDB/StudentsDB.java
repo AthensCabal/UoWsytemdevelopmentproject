@@ -72,10 +72,17 @@ public class StudentsDB implements StudentsDB_Interface {
             //##INITIAL SQL SECTION##
             //Create a statement to issue simple commands.
             s = conn.createStatement();
-
-            //this truly deletes just incase the cleanup() fails to delete the first database
+            //this truly deletes just incase the cleanup() fails to delete the first database            
             DatabaseMetaData dbmd = conn.getMetaData();
+            ResultSet rs = dbmd.getTables(null, null, dbName.toUpperCase(), null);
 
+            if (rs.next()) {
+
+                String sql = "DROP TABLE " + dbName.toUpperCase();
+                s.executeUpdate(sql);
+
+            }
+            
             //This creates a table
             s.execute(createTable);
 

@@ -61,10 +61,24 @@ public class StaffDB implements StaffDB_Interface {
 
             //##INITIAL SQL SECTION##
             //Create a statement to issue simple commands.
+            s = conn.createStatement();
+            
+            //this truly deletes just incase the cleanup() fails to delete the first database            
+            DatabaseMetaData dbmd = conn.getMetaData();
+            ResultSet rs = dbmd.getTables(null, null, dbName.toUpperCase(), null);
+
+            if (rs.next()) {
+
+                String sql = "DROP TABLE " + dbName.toUpperCase();
+                s.executeUpdate(sql);
+
+            }
+            
+            //##INITIAL SQL SECTION##
+            //Create a statement to issue simple commands.
             ps = conn.prepareStatement(createTable);
 
-            //this truly deletes just incase the cleanup() fails to delete the first database
-            //DatabaseMetaData dbmd = conn.getMetaData();
+            ;
 
             //This creates a table
             ps.executeUpdate();
@@ -75,7 +89,7 @@ public class StaffDB implements StaffDB_Interface {
             try {
 
                 //this is the XML reader
-                File collectionfile = new File("./src/CCCUStaffList.xml");
+                File collectionfile = new File("../src/CCCUStaffList.xml");
                 DocumentBuilderFactory collFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder dBuilder = collFactory.newDocumentBuilder();
                 Document doc = dBuilder.parse(collectionfile);
@@ -120,6 +134,8 @@ public class StaffDB implements StaffDB_Interface {
         } catch (Throwable e) {
 
             //When the server is off,prompt exit program
+            
+            /*
             System.out.println("StaffDatabase could not be connected. Connect to the server and try again.");
             System.out.println("Do you still wish to continue the program? Y/N ");
             Scanner in = new Scanner(System.in);
@@ -134,8 +150,12 @@ public class StaffDB implements StaffDB_Interface {
                 default:
                     System.out.println("The program will continue to run but do note that none of the choice will work.");
                     break;
-
+            
             }
+*/
+            e.printStackTrace(System.out);
+            
+            
         }
 
     }
