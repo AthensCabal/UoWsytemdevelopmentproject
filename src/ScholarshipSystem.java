@@ -22,7 +22,5 @@ public class ScholarshipSystem {
         //ScholarshipsDB scholarshipDataBase = new ScholarshipsDB();
         mainFrame test = new mainFrame(staffDataBase,studentsDataBase/*,scholarshipDataBase*/);
         test.setVisible(true);
-        staffDataBase.cleanup();
-        studentsDataBase.cleanup();
     }
 }
