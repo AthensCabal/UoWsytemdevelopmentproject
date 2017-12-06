@@ -42,13 +42,11 @@ public class Internal_Scholarships implements Scholarships {
     private List<String> level;
     private List<String> division;
     private List<String> programme;
-    private List waitList;
-    private List recommendedList;
-    private List acceptedList;
-    private List rejectedList;
+    private List <String> waitList;
+    private List <String> recommendedList;
+    private List <String> acceptedList;
+    private List <String> rejectedList;
     private double CGPARequirements;
-    private int currApplicants;
-    private int currAwardees;
 
     public Internal_Scholarships() {
 
@@ -69,12 +67,10 @@ public class Internal_Scholarships implements Scholarships {
         acceptedList = new ArrayList();
         rejectedList = new ArrayList();
         CGPARequirements = -1.0;
-        currAwardees = 0;
-        currApplicants = 0;
 
     }
 
-    public Internal_Scholarships(String nam, String id, String org, String des, double amt, int maxAwd, int maxApp, Date ICO, Date FCO, double cgpa, List<String> lvl, List<String> div, List<String> prgm, List wait, List rec, List acpt, List rej) {
+    public Internal_Scholarships(String nam, String id, String org, String des, double amt, int maxAwd, int maxApp, Date ICO, Date FCO, List<String> lvl, List<String> div, List<String> prgm, List <String> wait, List <String> rec, List <String> acpt, List <String> rej,double cgpa) {
 
         name = nam;
         ID = id;
@@ -91,8 +87,7 @@ public class Internal_Scholarships implements Scholarships {
         programme = prgm;
         waitList = wait;
         recommendedList = rec;
-        acceptedList = acpt;
-        rejectedList = rej;
+
 
     }
 
@@ -180,25 +175,25 @@ public class Internal_Scholarships implements Scholarships {
 
     }
 
-    public List getWaitList() {
+    public List <String> getWaitList() {
 
         return waitList;
 
     }
 
-    public List getRecommendedList() {
+    public List <String> getRecommendedList() {
 
         return recommendedList;
 
     }
 
-    public List getAcceptedList() {
+    public List <String> getAcceptedList() {
 
         return acceptedList;
 
     }
 
-    public List getRejectedList() {
+    public List <String> getRejectedList() {
 
         return rejectedList;
 
@@ -282,35 +277,27 @@ public class Internal_Scholarships implements Scholarships {
 
     }
 
-    public void setWaitList(int SID) {
+    public void setWaitList(String SID) {
 
         waitList.add(SID);
 
     }
 
-    public void setRecommendedList(int SID) {
+    public void setRecommendedList(String SID) {
 
         recommendedList.add(SID);
 
     }
 
-    public void setAcceptedList(int SID) {
+    public void setAcceptedList(String SID) {
 
         acceptedList.add(SID);
 
     }
 
-    public void setRejectedList(int SID) {
+    public void setRejectedList(String SID) {
 
         rejectedList.add(SID);
 
-    }
-    
-        public int getCurrApplicants() {
-        return currApplicants;
-    }
-    
-    public int getCurrAwardees() {
-        return currAwardees;
     }
 }
