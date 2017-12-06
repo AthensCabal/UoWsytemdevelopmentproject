@@ -10,7 +10,6 @@ import CCCU.edu.hk.ScholarshipsDB.*;
 import CCCU.edu.hk.StaffDB.*;
 import CCCU.edu.hk.StudentsDB.*;
 import static java.lang.System.exit;
-import java.util.Arrays;
 import javax.swing.JOptionPane;
 
 public class mainFrame extends JFrame {
@@ -206,51 +205,44 @@ public class mainFrame extends JFrame {
         dispose();
         String ID = student_eidTextField.getText();
         int IDparse = Integer.parseInt(ID);
-        char[] pass = jPasswordField1.getPassword();
+        String pass = jPasswordField1.getSelectedText();
         Students grab = studentsDB.getStudent(ID);
-        
-        if (grab == null) {
-            JOptionPane.showMessageDialog(mainFrame,
-                    "Wrong ID/and Password:",
-                    "Login Error!",
-                    JOptionPane.ERROR_MESSAGE);
-        } else if (grab != null) {
-            String passDB = grab.getPassword();
-            char [] passDBchar = passDB.toCharArray();
-            if (Arrays.equals(pass, passDBchar)) {
-                JOptionPane.showMessageDialog(mainFrame, "Successful!", "Login Message", JOptionPane.INFORMATION_MESSAGE);
-            } else if (!(Arrays.equals(pass, passDBchar))) {
-                JOptionPane.showMessageDialog(mainFrame,
-                        "Wrong Password:"+passDB,
-                        "Login Error!",
-                        JOptionPane.ERROR_MESSAGE);
-            }
+        int IDCom = grab.getSID();
+        String passCom = grab.getPassword();
+
+        if ((IDparse == IDCom) && (pass.equals(passCom))) {
+            JOptionPane.showMessageDialog(mainFrame, "Successful");
+            studentFrame fr = new studentFrame();
+            fr.setResizable(false);
+            fr.setSize(835, 600);
+            fr.setLocationRelativeTo(this);
+            fr.setTitle("CCCU Scholarship Management System");
+            fr.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(mainFrame, "Unsuccessful");
         }
+
     }//GEN-LAST:event_student_loginButtonActionPerformed
 
     private void teacher_loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teacher_loginButtonActionPerformed
         dispose();
         String ID = teacher_eidTextField.getText();
         int IDparse = Integer.parseInt(ID);
-        char[] pass = jPasswordField2.getPassword();
+        String pass = jPasswordField2.getSelectedText();
         Staff grab = staffDB.getStaff(ID);
-        
-        if (grab == null) {
-            JOptionPane.showMessageDialog(mainFrame,
-                    "Wrong ID/and Password:",
-                    "Login Error!",
-                    JOptionPane.ERROR_MESSAGE);
-        } else if (grab != null) {
-            String passDB = grab.getPassword();
-            char [] passDBchar = passDB.toCharArray();
-            if (Arrays.equals(pass, passDBchar)) {
-                JOptionPane.showMessageDialog(mainFrame, "Successful!", "Login Message", JOptionPane.INFORMATION_MESSAGE);
-            } else if (!(Arrays.equals(pass, passDBchar))) {
-                JOptionPane.showMessageDialog(mainFrame,
-                        "Wrong Password:"+passDB,
-                        "Login Error!",
-                        JOptionPane.ERROR_MESSAGE);
-            }
+        int IDCom = grab.getSID();
+        String passCom = grab.getPassword();
+
+        if (IDparse == IDCom && pass.equals(passCom)) {
+            JOptionPane.showMessageDialog(mainFrame, "Successful");
+            staffFrame fr = new staffFrame();
+            fr.setResizable(false);
+            fr.setSize(835, 600);
+            fr.setLocationRelativeTo(this);
+            fr.setTitle("CCCU Scholarship Management System");
+            fr.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(mainFrame, "Unsuccessful");
         }
     }//GEN-LAST:event_teacher_loginButtonActionPerformed
 

@@ -40,14 +40,14 @@ public class StudentsDB implements StudentsDB_Interface {
     // define the Derby connection URL to use
     String connectionURL = "jdbc:derby://localhost:1527/" + dbName + ";create=true";
 //StudentsUser,StudentsPassword,FirstName,LastName,StudentsID,StudentsEID,LevelOfStudy,Division,Programme,StudentsEmail,PrivateEmail,CGPA,Applied
-    String createTable = "CREATE TABLE StudentsList (StudentsUser VARCHAR(256) NOT NULL,"
+    String createTable = "CREATE TABLE StudentsList (StudentsUser VARCHAR(256) NOT NULL, "
             + "StudentsPassword VARCHAR(256) NOT NULL, "
             + "FirstName VARCHAR(256) NOT NULL, "
             + "LastName VARCHAR(256) NOT NULL, "
             + "StudentsID VARCHAR(256) NOT NULL, "
-            + "StudentsEID VARCHAR(256) NOT NULL, "
-            + "LevelOfStudy VARCHAR(256) NOT NULL, "
-            + "Division VARCHAR(256) NOT NULL, "
+            + "StudentsEID VARCHAR(256) NOT NULL,"
+            + "LevelOfStudy VARCHAR(256) NOT NULL,"
+            + "Division VARCHAR(256) NOT NULL,"
             + "Programme VARCHAR(256) NOT NULL, "
             + "StudentsEmail VARCHAR(256) NOT NULL, "
             + "PrivateEmail VARCHAR(256) NOT NULL, "
@@ -79,11 +79,9 @@ public class StudentsDB implements StudentsDB_Interface {
             //This creates a table
             s.execute(createTable);
 
-            ps = conn.prepareStatement("INSERT INTO StudentsList(StudentsUser,StudentsPassword,FirstName,LastName,StudentsID,StudentsEID,LevelOfStudy,Division,Programme,StudentsEmail,PrivateEmail,CGPA,Applied) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
             //#Students SQL INIT#
             //THIS PART REPLACES COLLECTIONFACTORY ENTIRELY
             //THIS ADDS THE INFO FROM THE XML FILES INTO THE DATABASE
-            
             try {
 
                 //this is the XML reader
@@ -95,11 +93,12 @@ public class StudentsDB implements StudentsDB_Interface {
 
                 //Setting up Students
                 NodeList StudentsList = doc.getElementsByTagName("Students");
-                
+
                 for (int i = 0; i < StudentsList.getLength(); i++) {
 
                     Node node = StudentsList.item(i);
 
+                    ps = conn.prepareStatement("INSERT INTO StudentsList(StudentsUser,StudentsPassword,FirstName,LastName,StudentsID,StudentsEID,LevelOfStudy,Division,Programme,StudentsEmail,PrivateEmail,CGPA,Applied) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
                     //this is for checking if it is an element
                     if (node.getNodeType() == Node.ELEMENT_NODE) {
