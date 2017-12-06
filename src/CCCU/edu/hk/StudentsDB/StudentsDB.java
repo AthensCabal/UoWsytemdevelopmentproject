@@ -302,6 +302,19 @@ public class StudentsDB implements StudentsDB_Interface {
     public void cleanup() {
 
         try {
+            
+            //deletes database          
+            DatabaseMetaData dbmd = conn.getMetaData();
+            ResultSet rs = dbmd.getTables(null, null, dbName.toUpperCase(), null);
+
+            
+            if (rs.next()) {
+
+                String sql = "DROP TABLE " + dbName.toUpperCase();
+                s.executeUpdate(sql);
+
+            }
+            
             conn.close();
             s.close();
             ps.close();

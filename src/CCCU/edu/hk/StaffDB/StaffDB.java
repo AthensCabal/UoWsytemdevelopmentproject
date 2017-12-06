@@ -31,7 +31,7 @@ public class StaffDB implements StaffDB_Interface {
     String connectionURL = "jdbc:derby://localhost:1527/" + dbName + ";create=true";
 //userName,password,firstName,lastName,StaffEID,StaffID,Division,Title,Status,StaffEmail,CommitteeMember,CommitteeTitle
     String createTable = "CREATE TABLE StaffList (userName VARCHAR(50) NOT NULL, "
-            + "password VARCHAR(9) NOT NULL, "
+            + "password VARCHAR(256) NOT NULL, "
             + "firstName VARCHAR(256) NOT NULL, "
             + "lastName VARCHAR(256) NOT NULL, "
             + "StaffEID VARCHAR(256) NOT NULL, "
@@ -299,6 +299,18 @@ public class StaffDB implements StaffDB_Interface {
     public void cleanup() {
 
         try {
+            
+            //deletes database          
+            DatabaseMetaData dbmd = conn.getMetaData();
+            ResultSet rs = dbmd.getTables(null, null, dbName.toUpperCase(), null);
+
+            if (rs.next()) {
+
+                String sql = "DROP TABLE " + dbName.toUpperCase();
+                s.executeUpdate(sql);
+
+            }
+            
             conn.close();
             s.close();
             ps.close();
