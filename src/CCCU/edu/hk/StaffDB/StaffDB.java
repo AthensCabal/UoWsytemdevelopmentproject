@@ -75,7 +75,7 @@ public class StaffDB implements StaffDB_Interface {
             try {
 
                 //this is the XML reader
-                File collectionfile = new File("./src/CCCUStaffList.xml");
+                File collectionfile = new File("../src/CCCUStaffList.xml");
                 DocumentBuilderFactory collFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder dBuilder = collFactory.newDocumentBuilder();
                 Document doc = dBuilder.parse(collectionfile);
