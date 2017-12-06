@@ -52,6 +52,8 @@ public class External_Scholarships implements Scholarships {
     private List acceptedList;
     private List rejectedList;
     private double CGPARequirements;
+    private int currApplicants;
+    private int currAwardees;
 
     public External_Scholarships() {
 
@@ -72,6 +74,8 @@ public class External_Scholarships implements Scholarships {
         acceptedList = new ArrayList();
         rejectedList = new ArrayList();
         CGPARequirements = -1.0;
+        currAwardees = 0;
+        currApplicants = 0;
 
     }
 
@@ -307,4 +311,11 @@ public class External_Scholarships implements Scholarships {
         
     }
     
+    public int getCurrApplicants() {
+        return currApplicants;
+    }
+    
+    public int getCurrAwardees() {
+        return currAwardees;
+    }
 }
