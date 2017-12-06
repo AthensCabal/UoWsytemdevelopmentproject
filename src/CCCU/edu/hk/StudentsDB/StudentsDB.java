@@ -175,8 +175,7 @@ public class StudentsDB implements StudentsDB_Interface {
             }
 
         } catch (Throwable e) {
-            System.out.println("Exception thrown at getCollectionSize():");
-            e.printStackTrace(System.out);
+            //
         }
         return size;
     }
@@ -230,8 +229,7 @@ public class StudentsDB implements StudentsDB_Interface {
             }
 
         } catch (Throwable ex) {
-            System.out.println("Exception thrown at getStudents():");
-            ex.printStackTrace(System.out);
+            //
         }
         //Never used! This will cause NullPointerException
         return null;
@@ -268,8 +266,7 @@ public class StudentsDB implements StudentsDB_Interface {
             ps.executeUpdate();
 
         } catch (Throwable ex) {
-            System.out.println("Exception thrown at addStudents():");
-            ex.printStackTrace(System.out);
+            //
         }
 
     }
@@ -292,8 +289,7 @@ public class StudentsDB implements StudentsDB_Interface {
             
         } catch (Throwable ex) {
 
-            System.out.println("Exception thrown at deleteStudents()");
-            ex.printStackTrace(System.out);
+            //
 
         }
 
@@ -321,8 +317,7 @@ public class StudentsDB implements StudentsDB_Interface {
             rs.close();
 
         } catch (Throwable ex) {
-            System.out.println("Exception thrown at cleanup()");
-            ex.printStackTrace(System.out);
+            //;
         }
     }
 }

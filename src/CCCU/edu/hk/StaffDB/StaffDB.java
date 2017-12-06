@@ -125,10 +125,8 @@ public class StaffDB implements StaffDB_Interface {
                         ps.executeUpdate();
                     }
                 }
-            } catch (Throwable e2) {
-
-                System.out.println("Exception was thrown at MyCollectionDB :");
-                e2.printStackTrace(System.out);
+            } catch (Throwable e) {
+                    //
 
             }
 
@@ -153,8 +151,7 @@ public class StaffDB implements StaffDB_Interface {
                     break;
             
             }
-*/
-            e.printStackTrace(System.out);
+            */
             
             
         }
@@ -219,9 +216,8 @@ public class StaffDB implements StaffDB_Interface {
 
             }
 
-        } catch (Throwable ex) {
-            System.out.println("Exception thrown at getStaff():");
-            ex.printStackTrace(System.out);
+        } catch (Throwable e) {
+            //
         }
         //Never used! This will cause NullPointerException
         return null;
@@ -263,9 +259,8 @@ public class StaffDB implements StaffDB_Interface {
 
             ps.executeUpdate();
 
-        } catch (Throwable ex) {
-            System.out.println("Exception thrown at addStaff():");
-            ex.printStackTrace(System.out);
+        } catch (Throwable e) {
+            //
         }
 
     }
@@ -289,8 +284,7 @@ public class StaffDB implements StaffDB_Interface {
             }
         } catch (Throwable ex) {
 
-            System.out.println("Exception thrown at deleteStaff()");
-            ex.printStackTrace(System.out);
+            //
 
         }
 
@@ -317,8 +311,7 @@ public class StaffDB implements StaffDB_Interface {
             rs.close();
 
         } catch (Throwable ex) {
-            System.out.println("Exception thrown at cleanup()");
-            ex.printStackTrace(System.out);
+            //
         }
     }
 }
