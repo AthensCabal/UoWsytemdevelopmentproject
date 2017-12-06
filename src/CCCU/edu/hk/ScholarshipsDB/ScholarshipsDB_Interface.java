@@ -27,13 +27,13 @@ public interface ScholarshipsDB_Interface {
 	
     /**
      * This method add an album to the database. 
-     * @param Scholarship the Scholarship to be add
+     * @param scholarship
      */
 	void addScholarship(Scholarships scholarship);
 
     /**
      * This method delete a staff from the database. 
-     * @param  ScholarshipID 
+     * @param scholarshipID 
      */
 	void deleteScholarship(String scholarshipID);
 

@@ -42,7 +42,10 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
     // define the Derby connection URL to use
     String connectionURL = "jdbc:derby://localhost:1527/" + dbName + ";create=true";
 
-//Name,ID,Organisation,Description,Amount,maxAwardees,maxApplicants,initialCutOff,finalCutOff,Level,Division,Programme,waitList,recommendedList,acceptedList,rejectedList,CGPARequirements
+//Name,ID,Organisation,Description,Amount,maxAwardees
+//,maxApplicants,initialCutOff,finalCutOff,Level
+//,Division,Programme,waitList
+//,recommendedList,acceptedList,rejectedList,CGPARequirements
     String createTable = "CREATE TABLE ScholarshipsList (Name VARCHAR(256) NOT NULL, "
             + "ID VARCHAR(256) NOT NULL, "
             + "Oragnisation VARCHAR(256) NOT NULL, "
@@ -51,7 +54,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
             + "maxAwardees VARCHAR(256) NOT NULL, "
             + "maxApplicants VARCHAR(256) NOT NULL, "
             + "initialCutOff VARCHAR(256) NOT NULL, "
-            + "finalCutOff VARCHAR(256) NOT NULL"
+            + "finalCutOff VARCHAR(256) NOT NULL, "
             + "Level VARCHAR(256) NOT NULL, "
             + "Division VARCHAR(256) NOT NULL, "
             + "Programme VARCHAR(256) NOT NULL, "
@@ -92,9 +95,12 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
             }
 
             //This creates a table
-            s.execute(createTable);
-//Name,ID,Organisation,Description,Amount,maxAwardees,maxApplicants,initialCutOff,finalCutOff,Level,Division,Programme,
-//waitList,recommendedList,acceptedList,rejectedList,CGPARequirements
+            ps = conn.prepareStatement(createTable);
+           
+            
+            
+            ps.executeUpdate();
+           
             ps = conn.prepareStatement("INSERT INTO ScholarshipsList(Name,ID,Organisation,Description,Amount,maxAwardees,maxApplicants,initialCuttOff,finalCutOff,Level,Division,Programme,waitList,recommendedList,acceptedList,rejectedList,CGPARequirements) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             //#Scholarships SQL INIT#
@@ -132,28 +138,25 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
                         ps.setString(8, element1.getElementsByTagName("initialCutOff").item(0).getTextContent().trim());
                         ps.setString(9, element1.getElementsByTagName("finalCutOff").item(0).getTextContent().trim());
                         ps.setString(10, element1.getElementsByTagName("Level").item(0).getTextContent().trim());
-                        ps.setString(12, element1.getElementsByTagName("Division").item(0).getTextContent().trim());
+                        ps.setString(11, element1.getElementsByTagName("Division").item(0).getTextContent().trim());
                         ps.setString(12, element1.getElementsByTagName("Programme").item(0).getTextContent().trim());
                         ps.setString(13, element1.getElementsByTagName("waitList").item(0).getTextContent().trim());
                         ps.setString(14, element1.getElementsByTagName("recommendedList").item(0).getTextContent().trim());
                         ps.setString(15, element1.getElementsByTagName("acceptedList").item(0).getTextContent().trim());
                         ps.setString(16, element1.getElementsByTagName("rejectedList").item(0).getTextContent().trim());
                         ps.setString(17, element1.getElementsByTagName("CGPARequirements").item(0).getTextContent().trim());
-
                         ps.executeUpdate();
-
                     }
                 }
-
             } catch (Throwable e2) {
 
-                System.out.println("Exception was thrown at MyCollectionDB :");
-                e2.printStackTrace(System.out);
+                //
 
             }
 
         } catch (Throwable e) {
 
+            /*
             //When the server is off,prompt exit program
             System.out.println("Database could not be connected. Connect to the server and try again.");
             System.out.println("Do you still wish to continue the program? Y/N ");
@@ -169,8 +172,8 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
                 default:
                     System.out.println("The program will continue to run but do note that none of the choice will work.");
                     break;
-
-            }
+                    */
+            
         }
 
     }
@@ -220,7 +223,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
 
                     //Initial Date CutOff
                     String dateInitial = rs.getString("initalCutOff");
-                    String[] tempDateInitial = dateInitial.split("/");
+                    String[] tempDateInitial = dateInitial.split(" ");
                     int[] intDateInitial = null;
                     for (int i = 0; i < tempDateInitial.length; i++) {
                         tempDateInitial[i] = tempDateInitial[i].trim();
@@ -232,7 +235,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
 
                     //Final Date CutOff
                     String dateFinal = rs.getString("finalCutOff");
-                    String[] tempDateFinal = dateFinal.split("/");
+                    String[] tempDateFinal = dateFinal.split(" ");
                     int[] intDateFinal = null;
                     for (int i = 0; i < tempDateFinal.length; i++) {
                         tempDateFinal[i] = tempDateFinal[i].trim();
@@ -589,15 +592,26 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
 
     public void cleanup() {
 
-        try {
+         try {
+            
+            //deletes database          
+            DatabaseMetaData dbmd = conn.getMetaData();
+            ResultSet rs = dbmd.getTables(null, null, dbName.toUpperCase(), null);
+
+            if (rs.next()) {
+
+                String sql = "DROP TABLE " + dbName.toUpperCase();
+                s.executeUpdate(sql);
+
+            }
+            
             conn.close();
             s.close();
             ps.close();
             rs.close();
 
         } catch (Throwable ex) {
-            System.out.println("Exception thrown at cleanup()");
-            ex.printStackTrace(System.out);
+            //
         }
     }
 }

@@ -17,13 +17,15 @@ public class mainFrame extends JFrame {
 
     private StaffDB staffDB;
     private StudentsDB studentsDB;
-    //private ScholarshipsDB scholarshipsDB;
+    private ScholarshipsDB scholarshipsDB;
+    private studentFrame stdFrame;
+    private staffFrame stfFrame;
 
-    public mainFrame(StaffDB staffdb, StudentsDB stddb/*, ScholarshipsDB schlrDB*/) {
+    public mainFrame(StaffDB staffdb, StudentsDB stddb, ScholarshipsDB schlrDB) {
 
         staffDB = staffdb;
         studentsDB = stddb;
-        //scholarshipsDB = schlrDB;
+        scholarshipsDB = schlrDB;
 
         initComponents();
         setResizable(false);
@@ -218,7 +220,9 @@ public class mainFrame extends JFrame {
             String passDB = grab.getPassword();
             char [] passDBchar = passDB.toCharArray();
             if (Arrays.equals(pass, passDBchar)) {
-                JOptionPane.showMessageDialog(mainFrame, "Successful!", "Login Message", JOptionPane.INFORMATION_MESSAGE);
+                //JOptionPane.showMessageDialog(mainFrame, "Successful!", "Login Message", JOptionPane.INFORMATION_MESSAGE);
+                stdFrame = new studentFrame(grab,studentsDB,scholarshipsDB);
+                stdFrame.setVisible(true);
             } else if (!(Arrays.equals(pass, passDBchar))) {
                 JOptionPane.showMessageDialog(mainFrame,
                         "Wrong Password:"+passDB,
@@ -244,7 +248,9 @@ public class mainFrame extends JFrame {
             String passDB = grab.getPassword();
             char [] passDBchar = passDB.toCharArray();
             if (Arrays.equals(pass, passDBchar)) {
-                JOptionPane.showMessageDialog(mainFrame, "Successful!", "Login Message", JOptionPane.INFORMATION_MESSAGE);
+                //JOptionPane.showMessageDialog(mainFrame, "Successful!", "Login Message", JOptionPane.INFORMATION_MESSAGE);
+                stfFrame = new staffFrame(grab,staffDB,scholarshipsDB);
+                stfFrame.setVisible(true);
             } else if (!(Arrays.equals(pass, passDBchar))) {
                 JOptionPane.showMessageDialog(mainFrame,
                         "Wrong Password:"+passDB,
@@ -258,6 +264,7 @@ public class mainFrame extends JFrame {
         // TODO add your handling code here:
         staffDB.cleanup();
         studentsDB.cleanup();
+        scholarshipsDB.cleanup();
         exit(0);
     }//GEN-LAST:event_Exit_ButtonActionPerformed
 

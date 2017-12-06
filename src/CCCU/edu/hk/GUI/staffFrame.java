@@ -1,4 +1,7 @@
 package CCCU.edu.hk.GUI;
+import CCCU.edu.hk.Accounts.Staff;
+import CCCU.edu.hk.ScholarshipsDB.ScholarshipsDB;
+import CCCU.edu.hk.StaffDB.StaffDB;
 import javax.swing.JFrame;
 
 /*
@@ -12,7 +15,7 @@ import javax.swing.JFrame;
  * @author Cheng
  */
 public class staffFrame extends JFrame {
-       public staffFrame() {
+       public staffFrame(Staff stf, StaffDB stdDB, ScholarshipsDB schlrDB) {
         initComponents();    
     }
 
@@ -86,7 +89,7 @@ public class staffFrame extends JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 604, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jTextField1)

@@ -1,17 +1,55 @@
 <?xml version="1.0"?>
-<Student>
-    <StaffType>0</StaffType>
-    <StaffID>0000000</StaffID>
-    <FirstName>John</FirstName>
-    <LastName>Smith</LastName>
-    <Department>Department of Computer Science</Department>
-    <CommitteeTitle>NULL</CommitteeTitle>
-</Student>
-<Student>
-    <StaffType>1</StaffType>
-    <StaffID>0000001</StaffID>
-    <FirstName>Ben</FirstName>
-    <LastName>Wong</LastName>
-    <Department>Department of Computer Engineering</Department>
-    <CommitteeTitle>Member</CommitteeTitle>
-</Student>
+<Scholarships>
+    <Name>
+        CCCU Perfomance Scholarship(Associate)
+    </Name>
+    <ID>
+        CCCU01
+    </ID>
+    <Organisation>
+        CCCU
+    </Organisation>
+    <Description>
+        Best Performance in each programme
+    </Description>
+    <Amount>
+        30000.0
+    </Amount>
+    <maxAwardees>
+        4
+    </maxAwardees>
+    <maxApplicants>
+        0
+    </maxApplicants>
+    <initialCutOff>
+        2017 12 09
+    </initialCutOff>
+    <finalCutOff>
+        2017 12 10
+    </finalCutOff>
+    <Level>
+        Associate
+        Bachelors
+    </Level>
+    <Division>
+        All
+    </Division>
+    <Programme>
+        All
+    </Programme>
+    <waitList>
+        0000
+    </waitList>
+    <recommendedList>
+        0000
+    </recommendedList>
+    <acceptedList>
+        00000
+    </acceptedList>
+    <rejectedList>
+        0000
+    </rejectedList>
+    <CGPARequirements>
+        3.5
+    </CGPARequirements>
+</Scholarships>

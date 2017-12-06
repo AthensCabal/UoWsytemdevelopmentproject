@@ -78,7 +78,7 @@ public class StaffDB implements StaffDB_Interface {
             //Create a statement to issue simple commands.
             ps = conn.prepareStatement(createTable);
 
-            ;
+            
 
             //This creates a table
             ps.executeUpdate();

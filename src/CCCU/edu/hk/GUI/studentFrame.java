@@ -1,4 +1,7 @@
-
+package CCCU.edu.hk.GUI;
+import CCCU.edu.hk.Accounts.Students;
+import CCCU.edu.hk.ScholarshipsDB.ScholarshipsDB;
+import CCCU.edu.hk.StudentsDB.StudentsDB;
 import javax.swing.JFrame;
 
 /*
@@ -12,7 +15,7 @@ import javax.swing.JFrame;
  * @author Cheng
  */
 public class studentFrame extends JFrame {
-    public studentFrame() {
+    public studentFrame(Students std, StudentsDB stdDB, ScholarshipsDB schlrDB) {
         initComponents();
     }
     public void jInternalFrame1(){
@@ -198,12 +201,7 @@ public class studentFrame extends JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         dispose();
-        mainFrame fr = new mainFrame();
-        fr.setResizable(false);
-        fr.setSize(835,600);
-        fr.setLocationRelativeTo(this);
-        fr.setTitle("CCCU Scholarship Management System");
-        fr.setVisible(true);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
