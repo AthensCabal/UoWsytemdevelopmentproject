@@ -30,18 +30,18 @@ public class StaffDB implements StaffDB_Interface {
     // define the Derby connection URL to use
     String connectionURL = "jdbc:derby://localhost:1527/" + dbName + ";create=true";
 //userName,password,firstName,lastName,StaffEID,StaffID,Division,Title,Status,StaffEmail,CommitteeMember,CommitteeTitle
-    String createTable = "CREATE TABLE StaffList (userName VARCHAR(1), "
-            + "password VARCHAR(9), "
-            + "firstName VARCHAR(256),"
-            + "lastName VARCHAR(256),"
-            + "StaffEID VARCHAR(256), "
-            + "StaffID VARCHAR(256), "
-            + "Division VARCHAR(256),"
-            + "Title VARCHAR(256)"
-            + "Status VARCHAR(256),"
-            + "StaffEmail VARCHAR(256),"
-            + "CommitteeMember VARCHAR(10),"
-            + "CommitteeTitle VARCHAR(256)"
+    String createTable = "CREATE TABLE StaffList (userName VARCHAR(50) NOT NULL, "
+            + "password VARCHAR(9) NOT NULL, "
+            + "firstName VARCHAR(256) NOT NULL, "
+            + "lastName VARCHAR(256) NOT NULL, "
+            + "StaffEID VARCHAR(256) NOT NULL, "
+            + "StaffID VARCHAR(256) NOT NULL, "
+            + "Division VARCHAR(256) NOT NULL, "
+            + "Title VARCHAR(256) NOT NULL, "
+            + "Status VARCHAR(256) NOT NULL, "
+            + "StaffEmail VARCHAR(256) NOT NULL, "
+            + "CommitteeMember VARCHAR(10) NOT NULL, "
+            + "CommitteeTitle VARCHAR(256) NOT NULL "
             + ")";
 
     Connection conn = null;
@@ -54,19 +54,20 @@ public class StaffDB implements StaffDB_Interface {
     public StaffDB() {
 
         try {
-
+            
+            Class.forName(driver);
             //Create and connect to database
             conn = DriverManager.getConnection(connectionURL);
 
             //##INITIAL SQL SECTION##
             //Create a statement to issue simple commands.
-            s = conn.createStatement();
+            ps = conn.prepareStatement(createTable);
 
             //this truly deletes just incase the cleanup() fails to delete the first database
-            DatabaseMetaData dbmd = conn.getMetaData();
+            //DatabaseMetaData dbmd = conn.getMetaData();
 
             //This creates a table
-            s.execute(createTable);
+            ps.executeUpdate();
 
             //#Staff SQL INIT#
             //THIS PART REPLACES COLLECTIONFACTORY ENTIRELY
@@ -74,7 +75,7 @@ public class StaffDB implements StaffDB_Interface {
             try {
 
                 //this is the XML reader
-                File collectionfile = new File("CCCUStaffList.xml");
+                File collectionfile = new File("./src/CCCUStaffList.xml");
                 DocumentBuilderFactory collFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder dBuilder = collFactory.newDocumentBuilder();
                 Document doc = dBuilder.parse(collectionfile);
@@ -86,7 +87,7 @@ public class StaffDB implements StaffDB_Interface {
                 for (int i = 0; i < staffList.getLength(); i++) {
 
                     Node node = staffList.item(i);
-
+                    
                     ps = conn.prepareStatement("INSERT INTO StaffList(userName,password,firstName,lastName,StaffEID,StaffID,Division,Title,Status,StaffEmail,CommitteeMember,CommitteeTitle) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
 
                     //this is for checking if it is an element
@@ -94,22 +95,21 @@ public class StaffDB implements StaffDB_Interface {
 
                         //userName,password,firstName,lastName,StaffEID,StaffID,Division,Status,StaffEmail,CommitteeMember,CommitteeTitle
                         Element element1 = (Element) node;
-                        ps.setString(1, element1.getElementsByTagName("User Name").item(0).getTextContent().trim());
-                        ps.setString(2, element1.getElementsByTagName("Password").item(0).getTextContent().trim());
-                        ps.setString(3, element1.getElementsByTagName("First Name").item(0).getTextContent().trim());
-                        ps.setString(4, element1.getElementsByTagName("Last Name").item(0).getTextContent().trim());
-                        ps.setString(5, element1.getElementsByTagName("Staff EID").item(0).getTextContent().trim());
-                        ps.setString(6, element1.getElementsByTagName("Staff ID").item(0).getTextContent().trim());
+                        ps.setString(1, element1.getElementsByTagName("userName").item(0).getTextContent().trim());
+                        ps.setString(2, element1.getElementsByTagName("password").item(0).getTextContent().trim());
+                        ps.setString(3, element1.getElementsByTagName("firstName").item(0).getTextContent().trim());
+                        ps.setString(4, element1.getElementsByTagName("lastName").item(0).getTextContent().trim());
+                        ps.setString(5, element1.getElementsByTagName("StaffEID").item(0).getTextContent().trim());
+                        ps.setString(6, element1.getElementsByTagName("StaffID").item(0).getTextContent().trim());
                         ps.setString(7, element1.getElementsByTagName("Division").item(0).getTextContent().trim());
                         ps.setString(8, element1.getElementsByTagName("Title").item(0).getTextContent().trim());
                         ps.setString(9, element1.getElementsByTagName("Status").item(0).getTextContent().trim());
-                        ps.setString(10, element1.getElementsByTagName("Staff Email").item(0).getTextContent().trim());
-                        ps.setString(11, element1.getElementsByTagName("Committee Member").item(0).getTextContent().trim());
-                        ps.setString(12, element1.getElementsByTagName("Committee Title").item(0).getTextContent().trim());
+                        ps.setString(10, element1.getElementsByTagName("StaffEmail").item(0).getTextContent().trim());
+                        ps.setString(11, element1.getElementsByTagName("CommitteeMember").item(0).getTextContent().trim());
+                        ps.setString(12, element1.getElementsByTagName("CommitteeTitle").item(0).getTextContent().trim());
                         ps.executeUpdate();
                     }
                 }
-
             } catch (Throwable e2) {
 
                 System.out.println("Exception was thrown at MyCollectionDB :");
@@ -120,7 +120,7 @@ public class StaffDB implements StaffDB_Interface {
         } catch (Throwable e) {
 
             //When the server is off,prompt exit program
-            System.out.println("Database could not be connected. Connect to the server and try again.");
+            System.out.println("StaffDatabase could not be connected. Connect to the server and try again.");
             System.out.println("Do you still wish to continue the program? Y/N ");
             Scanner in = new Scanner(System.in);
             String choice = in.nextLine();
@@ -274,7 +274,7 @@ public class StaffDB implements StaffDB_Interface {
         }
 
     }
-
+    
     public void cleanup() {
 
         try {

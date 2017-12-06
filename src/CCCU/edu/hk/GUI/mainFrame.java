@@ -1,21 +1,36 @@
+package CCCU.edu.hk.GUI;
 
+import CCCU.edu.hk.Accounts.Staff;
+import CCCU.edu.hk.Accounts.Students;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.text.Normalizer.Form;
 import javax.swing.JFrame;
-
+import CCCU.edu.hk.ScholarshipsDB.*;
+import CCCU.edu.hk.StaffDB.*;
+import CCCU.edu.hk.StudentsDB.*;
+import static java.lang.System.exit;
+import javax.swing.JOptionPane;
 
 public class mainFrame extends JFrame {
 
+    private StaffDB staffDB;
+    private StudentsDB studentsDB;
+    //private ScholarshipsDB scholarshipsDB;
 
-    public mainFrame() {
+    public mainFrame(StaffDB staffdb, StudentsDB stddb/*, ScholarshipsDB schlrDB*/) {
+
+        staffDB = staffdb;
+        studentsDB = stddb;
+        //scholarshipsDB = schlrDB;
+
         initComponents();
         setResizable(false);
         setLocationRelativeTo(this);
         setTitle("CCCU Scholarship Management System");
 
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,6 +56,7 @@ public class mainFrame extends JFrame {
         teacher_eidTextField = new javax.swing.JTextField();
         jPasswordField1 = new javax.swing.JPasswordField();
         jPasswordField2 = new javax.swing.JPasswordField();
+        Exit_Button = new javax.swing.JButton();
 
         mainFrame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         mainFrame.setTitle("CCCU Scholarship Management System");
@@ -130,6 +146,13 @@ public class mainFrame extends JFrame {
             }
         });
 
+        Exit_Button.setText("Exit");
+        Exit_Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Exit_ButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout bgPanelLayout = new javax.swing.GroupLayout(bgPanel);
         bgPanel.setLayout(bgPanelLayout);
         bgPanelLayout.setHorizontalGroup(
@@ -144,6 +167,10 @@ public class mainFrame extends JFrame {
                     .addComponent(teacher_eidTextField)
                     .addComponent(jPasswordField2, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
                 .addGap(97, 97, 97))
+            .addGroup(bgPanelLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(Exit_Button)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         bgPanelLayout.setVerticalGroup(
             bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,7 +183,9 @@ public class mainFrame extends JFrame {
                 .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(300, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
+                .addComponent(Exit_Button)
+                .addGap(48, 48, 48))
         );
 
         getContentPane().add(bgPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 600));
@@ -174,32 +203,62 @@ public class mainFrame extends JFrame {
 
     private void student_loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_student_loginButtonActionPerformed
         dispose();
-        studentFrame fr = new studentFrame();
-        fr.setResizable(false);
-        fr.setSize(835,600);
-        fr.setLocationRelativeTo(this);
-        fr.setTitle("CCCU Scholarship Management System");
-        fr.setVisible(true);
-        
+        String ID = student_eidTextField.getText();
+        int IDparse = Integer.parseInt(ID);
+        String pass = jPasswordField1.getSelectedText();
+        Students grab = studentsDB.getStudent(ID);
+        int IDCom = grab.getSID();
+        String passCom = grab.getPassword();
+
+        if ((IDparse == IDCom) && (pass.equals(passCom))) {
+            JOptionPane.showMessageDialog(mainFrame, "Successful");
+            studentFrame fr = new studentFrame();
+            fr.setResizable(false);
+            fr.setSize(835, 600);
+            fr.setLocationRelativeTo(this);
+            fr.setTitle("CCCU Scholarship Management System");
+            fr.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(mainFrame, "Unsuccessful");
+        }
+
     }//GEN-LAST:event_student_loginButtonActionPerformed
 
     private void teacher_loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teacher_loginButtonActionPerformed
         dispose();
-        staffFrame fr = new staffFrame();
-        fr.setResizable(false);
-        fr.setSize(835,600);
-        fr.setLocationRelativeTo(this);
-        fr.setTitle("CCCU Scholarship Management System");
-        fr.setVisible(true);
-        
+        String ID = teacher_eidTextField.getText();
+        int IDparse = Integer.parseInt(ID);
+        String pass = jPasswordField2.getSelectedText();
+        Staff grab = staffDB.getStaff(ID);
+        int IDCom = grab.getSID();
+        String passCom = grab.getPassword();
+
+        if (IDparse == IDCom && pass.equals(passCom)) {
+            JOptionPane.showMessageDialog(mainFrame, "Successful");
+            staffFrame fr = new staffFrame();
+            fr.setResizable(false);
+            fr.setSize(835, 600);
+            fr.setLocationRelativeTo(this);
+            fr.setTitle("CCCU Scholarship Management System");
+            fr.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(mainFrame, "Unsuccessful");
+        }
     }//GEN-LAST:event_teacher_loginButtonActionPerformed
+
+    private void Exit_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Exit_ButtonActionPerformed
+        // TODO add your handling code here:
+        staffDB.cleanup();
+        studentsDB.cleanup();
+        exit(0);
+    }//GEN-LAST:event_Exit_ButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Exit_Button;
     private javax.swing.JPanel bgPanel;
     private javax.swing.JLabel cccu_bgLabel;
     private javax.swing.JLabel cccu_logoLabel;

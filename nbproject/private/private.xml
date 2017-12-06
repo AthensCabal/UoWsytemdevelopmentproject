@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Manish/Desktop/System%20Development/Project/UoWsytemdevelopmentproject/src/CCCU/edu/hk/GUI/staffFrame.java</file>
             <file>file:/C:/Users/Manish/Desktop/System%20Development/Project/UoWsytemdevelopmentproject/src/CCCU/edu/hk/GUI/mainFrame.java</file>
-            <file>file:/C:/Users/Manish/Desktop/System%20Development/Project/UoWsytemdevelopmentproject/src/CCCU/edu/hk/GUI/studentFrame.java</file>
+            <file>file:/C:/Users/Manish/Desktop/System%20Development/Project/UoWsytemdevelopmentproject/src/CCCU/edu/hk/ScholarshipsDB/ScholarshipsDB.java</file>
             <file>file:/C:/Users/Manish/Desktop/System%20Development/Project/UoWsytemdevelopmentproject/src/ScholarshipSystem.java</file>
-            <file>file:/C:/Users/Manish/Desktop/System%20Development/Project/UoWsytemdevelopmentproject/src/CCCU/edu/hk/GUI/AutoScaleMode.java</file>
-            <file>file:/C:/Users/Manish/Desktop/System%20Development/Project/UoWsytemdevelopmentproject/src/CCCU/edu/hk/Scholarships/Internal_Scholarships.java</file>
+            <file>file:/C:/Users/Manish/Desktop/System%20Development/Project/UoWsytemdevelopmentproject/src/CCCU/edu/hk/StaffDB/StaffDB.java</file>
+            <file>file:/C:/Users/Manish/Desktop/System%20Development/Project/UoWsytemdevelopmentproject/src/CCCU/edu/hk/StudentsDB/StudentsDB.java</file>
         </group>
     </open-files>
 </project-private>

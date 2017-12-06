@@ -136,13 +136,7 @@ public class studentFrame extends JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        dispose();
-        mainFrame fr = new mainFrame();
-        fr.setResizable(false);
-        fr.setSize(835,600);
-        fr.setLocationRelativeTo(this);
-        fr.setTitle("CCCU Scholarship Management System");
-        fr.setVisible(true);
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

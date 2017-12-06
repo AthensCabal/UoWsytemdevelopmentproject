@@ -18,9 +18,11 @@ public class ScholarshipSystem {
     
     public static void main(String [] args){
         StaffDB staffDataBase  = new StaffDB();
-        StudentsDB studentsBase = new StudentsDB();
-        ScholarshipsDB scholarshipDataBase = new ScholarshipsDB();
-        mainFrame test = new mainFrame();
+        StudentsDB studentsDataBase = new StudentsDB();
+        //ScholarshipsDB scholarshipDataBase = new ScholarshipsDB();
+        mainFrame test = new mainFrame(staffDataBase,studentsDataBase/*,scholarshipDataBase*/);
         test.setVisible(true);
+        staffDataBase.cleanup();
+        studentsDataBase.cleanup();
     }
 }

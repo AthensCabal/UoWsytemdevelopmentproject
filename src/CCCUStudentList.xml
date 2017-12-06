@@ -1,19 +1,45 @@
 <?xml version="1.0"?>
 <CCCUSTUDENTLIST>
-<Student>
-<StaffType>0</StaffType>
-<StaffID>0000000</StaffID>
-<FirstName>John</FirstName>
-<LastName>Smith</LastName>
-<Department>Department of Computer Science</Department>
-<CommitteeTitle>NULL</CommitteeTitle>
-</Student>
-<Student>
-<StaffType>1</StaffType>
-<StaffID>0000001</StaffID>
-<FirstName>Ben</FirstName>
-<LastName>Wong</LastName>
-<Department>Department of Computer Engineering</Department>
-<CommitteeTitle>Member</CommitteeTitle>
-</Student>
+    <Student>
+        <StudentsUser>
+            test
+        </StudentsUser>
+        <StudentsPassword>
+            testing123
+        </StudentsPassword>
+        <FirstName>
+            John
+        </FirstName>
+        <LastName>
+            Smith
+        </LastName>
+        <StudentsID>
+            555577
+        </StudentsID>
+        <StudentsEID>
+            test2
+        </StudentsEID>
+        <LevelOfStudy>
+            Associate
+        </LevelOfStudy>
+        <Division>
+            Applied Science and Technology
+        </Division>
+        <Programme>
+            Engineering
+        </Programme>
+        <StudentsEmail>
+            test2@cityu.edu.hk
+        </StudentsEmail>
+        <PrivateEmail>
+            test2@lolmail.com
+        </PrivateEmail>
+        <CGPA>
+            3.22
+        </CGPA>
+        <Applied>
+            1300
+            2340
+        </Applied>
+    </Student>
 </CCCUSTUDENTLIST>

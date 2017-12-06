@@ -35,13 +35,13 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
     // define the Derby connection URL to use
     String connectionURL = "jdbc:derby://localhost:1527/" + dbName + ";create=true";
 
-    String createTable = "CREATE TABLE ScholarshipsList (ScholarshipsType VARCHAR(1), "
-            + "ScholarshipsID VARCHAR(9), "
-            + "ScholarshipsName VARCHAR(256)"
-            + "ScholarshipMax INT" /*Max number of applicants (approved)*/
-            + "ScholarshipsNum INT"  /*Number of seats*/
-            + "LevelApplicable VARCHAR(256), "
-            + "DivisionsApplicable VARCHAR(256), "
+    String createTable = "CREATE TABLE ScholarshipsList (ScholarshipsType VARCHAR(1),"
+            + "ScholarshipsID VARCHAR(9),"
+            + "ScholarshipsName VARCHAR(256),"
+            + "ScholarshipMax INT," /*Max number of applicants (approved)*/
+            + "ScholarshipsNum INT,"  /*Number of seats*/
+            + "LevelApplicable VARCHAR(256),"
+            + "DivisionsApplicable VARCHAR(256),"
             + "ProgrammeApplicable VARCHAR(256) )";
 
     Connection conn = null;
@@ -55,6 +55,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
 
         try {
 
+            Class.forName(driver);
             //Create and connect to database
             conn = DriverManager.getConnection(connectionURL);
 
@@ -74,7 +75,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
             try {
 
                 //this is the XML reader
-                File collectionfile = new File("CCCUScholarshipsList.xml");
+                File collectionfile = new File("./src/CCCUScholarshipsList.xml");
                 DocumentBuilderFactory collFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder dBuilder = collFactory.newDocumentBuilder();
                 Document doc = dBuilder.parse(collectionfile);
@@ -246,7 +247,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
         
         
     }
-
+    
     public void cleanup() {
         
         try {

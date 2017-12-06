@@ -221,6 +221,11 @@
                   </Group>
                   <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
               </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="Exit_Button" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -236,7 +241,9 @@
                       <Component id="jPasswordField1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jPasswordField2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="300" max="32767" attributes="0"/>
+                  <EmptySpace pref="207" max="32767" attributes="0"/>
+                  <Component id="Exit_Button" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -255,6 +262,14 @@
         <Component class="javax.swing.JPasswordField" name="jPasswordField1">
         </Component>
         <Component class="javax.swing.JPasswordField" name="jPasswordField2">
+        </Component>
+        <Component class="javax.swing.JButton" name="Exit_Button">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Exit"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Exit_ButtonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

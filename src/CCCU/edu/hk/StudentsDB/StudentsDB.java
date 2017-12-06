@@ -40,19 +40,19 @@ public class StudentsDB implements StudentsDB_Interface {
     // define the Derby connection URL to use
     String connectionURL = "jdbc:derby://localhost:1527/" + dbName + ";create=true";
 //StudentsUser,StudentsPassword,FirstName,LastName,StudentsID,StudentsEID,LevelOfStudy,Division,Programme,StudentsEmail,PrivateEmail,CGPA,Applied
-    String createTable = "CREATE TABLE StudentsList (StudentsUser VARCHAR(256), "
-            + "StudentsPassword VARCHAR(256), "
-            + "FirstName VARCHAR(256),"
-            + "LastName VARCHAR(256),"
-            + "StudentsID VARCHAR(256), "
-            + "StudentsEID VARCHAR(256), "
-            + "LevelOfStudy VARCHAR(256),"
-            + "Division VARCHAR(256),"
-            + "Programme VARCHAR(256),"
-            + "StudentsEmail VARCHAR(256),"
-            + "PrivateEmail VARCHAR(256),"
-            + "CGPA VARCHAR(10),"
-            + "Applied VARCHAR(256) )";
+    String createTable = "CREATE TABLE StudentsList (StudentsUser VARCHAR(256) NOT NULL, "
+            + "StudentsPassword VARCHAR(256) NOT NULL, "
+            + "FirstName VARCHAR(256) NOT NULL, "
+            + "LastName VARCHAR(256) NOT NULL, "
+            + "StudentsID VARCHAR(256) NOT NULL, "
+            + "StudentsEID VARCHAR(256) NOT NULL,"
+            + "LevelOfStudy VARCHAR(256) NOT NULL,"
+            + "Division VARCHAR(256) NOT NULL,"
+            + "Programme VARCHAR(256) NOT NULL, "
+            + "StudentsEmail VARCHAR(256) NOT NULL, "
+            + "PrivateEmail VARCHAR(256) NOT NULL, "
+            + "CGPA VARCHAR(10) NOT NULL, "
+            + "Applied VARCHAR(256) NOT NULL )";
 
     Connection conn = null;
     Statement s;
@@ -65,6 +65,7 @@ public class StudentsDB implements StudentsDB_Interface {
 
         try {
 
+            Class.forName(driver);
             //Create and connect to database
             conn = DriverManager.getConnection(connectionURL);
 
@@ -84,7 +85,7 @@ public class StudentsDB implements StudentsDB_Interface {
             try {
 
                 //this is the XML reader
-                File collectionfile = new File("CCCUStudentsList.xml");
+                File collectionfile = new File("./src/CCCUStudentList.xml");
                 DocumentBuilderFactory collFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder dBuilder = collFactory.newDocumentBuilder();
                 Document doc = dBuilder.parse(collectionfile);
@@ -105,19 +106,19 @@ public class StudentsDB implements StudentsDB_Interface {
                         //$$$$$$$$$$$$$$$$$$$$
                         //StudentsEmail,PrivateEmail,CGPA,Applied
                         Element element1 = (Element) node;
-                        ps.setString(1, element1.getElementsByTagName("Student User").item(0).getTextContent().trim());
-                        ps.setString(2, element1.getElementsByTagName("Student Password").item(0).getTextContent().trim());
-                        ps.setString(3, element1.getElementsByTagName("First Name").item(0).getTextContent().trim());
-                        ps.setString(4, element1.getElementsByTagName("Last Name").item(0).getTextContent().trim());
-                        ps.setString(5, element1.getElementsByTagName("Student ID").item(0).getTextContent().trim());
-                        ps.setString(6, element1.getElementsByTagName("Student EID").item(0).getTextContent().trim());
-                        ps.setString(7, element1.getElementsByTagName("Level Of Study").item(0).getTextContent().trim());
+                        ps.setString(1, element1.getElementsByTagName("StudentsUser").item(0).getTextContent().trim());
+                        ps.setString(2, element1.getElementsByTagName("StudentsPassword").item(0).getTextContent().trim());
+                        ps.setString(3, element1.getElementsByTagName("FirstName").item(0).getTextContent().trim());
+                        ps.setString(4, element1.getElementsByTagName("LastName").item(0).getTextContent().trim());
+                        ps.setString(5, element1.getElementsByTagName("StudentsID").item(0).getTextContent().trim());
+                        ps.setString(6, element1.getElementsByTagName("StudentsEID").item(0).getTextContent().trim());
+                        ps.setString(7, element1.getElementsByTagName("LevelOfStudy").item(0).getTextContent().trim());
                         ps.setString(8, element1.getElementsByTagName("Division").item(0).getTextContent().trim());
                         ps.setString(9, element1.getElementsByTagName("Programme").item(0).getTextContent().trim());
-                        ps.setString(10, element1.getElementsByTagName("Student Email").item(0).getTextContent().trim());
-                        ps.setString(11, element1.getElementsByTagName("Private Email").item(0).getTextContent().trim());
+                        ps.setString(10, element1.getElementsByTagName("StudentsEmail").item(0).getTextContent().trim());
+                        ps.setString(11, element1.getElementsByTagName("PrivateEmail").item(0).getTextContent().trim());
                         ps.setString(12, element1.getElementsByTagName("CGPA").item(0).getTextContent().trim());
-                        ps.setString(13, element1.getElementsByTagName("Applied List").item(0).getTextContent().trim());
+                        ps.setString(13, element1.getElementsByTagName("Applied").item(0).getTextContent().trim());
                         ps.executeUpdate();
 
                     }
@@ -133,7 +134,7 @@ public class StudentsDB implements StudentsDB_Interface {
         } catch (Throwable e) {
 
             //When the server is off,prompt exit program
-            System.out.println("Database could not be connected. Connect to the server and try again.");
+            System.out.println("StudentsDatabase could not be connected. Connect to the server and try again.");
             System.out.println("Do you still wish to continue the program? Y/N ");
             Scanner in = new Scanner(System.in);
             String choice = in.nextLine();
