@@ -1,19 +1,17 @@
 <?xml version="1.0"?>
-<CCCUSTUDENTLIST>
 <Student>
-<StaffType>0</StaffType>
-<StaffID>0000000</StaffID>
-<FirstName>John</FirstName>
-<LastName>Smith</LastName>
-<Department>Department of Computer Science</Department>
-<CommitteeTitle>NULL</CommitteeTitle>
+    <StaffType>0</StaffType>
+    <StaffID>0000000</StaffID>
+    <FirstName>John</FirstName>
+    <LastName>Smith</LastName>
+    <Department>Department of Computer Science</Department>
+    <CommitteeTitle>NULL</CommitteeTitle>
 </Student>
 <Student>
-<StaffType>1</StaffType>
-<StaffID>0000001</StaffID>
-<FirstName>Ben</FirstName>
-<LastName>Wong</LastName>
-<Department>Department of Computer Engineering</Department>
-<CommitteeTitle>Member</CommitteeTitle>
+    <StaffType>1</StaffType>
+    <StaffID>0000001</StaffID>
+    <FirstName>Ben</FirstName>
+    <LastName>Wong</LastName>
+    <Department>Department of Computer Engineering</Department>
+    <CommitteeTitle>Member</CommitteeTitle>
 </Student>
-</CCCUSTUDENTLIST>

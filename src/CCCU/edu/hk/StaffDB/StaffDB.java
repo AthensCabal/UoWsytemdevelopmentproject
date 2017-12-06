@@ -82,6 +82,8 @@ public class StaffDB implements StaffDB_Interface {
 
             //This creates a table
             ps.executeUpdate();
+            
+            ps = conn.prepareStatement("INSERT INTO StaffList(userName,password,firstName,lastName,StaffEID,StaffID,Division,Title,Status,StaffEmail,CommitteeMember,CommitteeTitle) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
 
             //#Staff SQL INIT#
             //THIS PART REPLACES COLLECTIONFACTORY ENTIRELY
@@ -89,7 +91,7 @@ public class StaffDB implements StaffDB_Interface {
             try {
 
                 //this is the XML reader
-                File collectionfile = new File("../src/CCCUStaffList.xml");
+                File collectionfile = new File("./src/CCCUStaffList.xml");
                 DocumentBuilderFactory collFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder dBuilder = collFactory.newDocumentBuilder();
                 Document doc = dBuilder.parse(collectionfile);
@@ -101,8 +103,7 @@ public class StaffDB implements StaffDB_Interface {
                 for (int i = 0; i < staffList.getLength(); i++) {
 
                     Node node = staffList.item(i);
-                    
-                    ps = conn.prepareStatement("INSERT INTO StaffList(userName,password,firstName,lastName,StaffEID,StaffID,Division,Title,Status,StaffEmail,CommitteeMember,CommitteeTitle) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+                   
 
                     //this is for checking if it is an element
                     if (node.getNodeType() == Node.ELEMENT_NODE) {
