@@ -1,4 +1,5 @@
 package CCCU.edu.hk.GUI;
+
 import CCCU.edu.hk.Accounts.Students;
 import CCCU.edu.hk.ScholarshipsDB.ScholarshipsDB;
 import CCCU.edu.hk.StudentsDB.StudentsDB;
@@ -9,24 +10,28 @@ import javax.swing.JFrame;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Cheng
  */
 public class studentFrame extends JFrame {
+
     Students loggedinStudents;
     StudentsDB studentsDB;
     ScholarshipsDB scholarshipsDB;
+    
+
     public studentFrame(Students std, StudentsDB stdDB, ScholarshipsDB schlrDB) {
-        initComponents();
         loggedinStudents = std;
         studentsDB = stdDB;
         scholarshipsDB = schlrDB;
+        initComponents();
     }
-    public void jInternalFrame1(){
-        
+
+    public void jInternalFrame1() {
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,6 +54,8 @@ public class studentFrame extends JFrame {
         testing = new java.awt.Label();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
 
         studentFrame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         studentFrame.setBounds(new java.awt.Rectangle(0, 0, 835, 600));
@@ -153,13 +160,29 @@ public class studentFrame extends JFrame {
 
         jButton4.setText("Apply");
 
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = scholarshipsDB.getScholarshipsID();
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jList1ValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jList1);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(testing, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane1))
+                    .addComponent(testing, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -172,10 +195,13 @@ public class studentFrame extends JFrame {
                 .addContainerGap()
                 .addComponent(testing, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(258, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Scholarships", jPanel2);
@@ -191,22 +217,26 @@ public class studentFrame extends JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         dispose();
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        detailsFrame fr = new detailsFrame();
+        String scholarshipID = jList1.getSelectedValue();
+        detailsFrame fr = new detailsFrame(scholarshipID,scholarshipsDB);
         fr.setResizable(false);
-        fr.setSize(500,400);
+        fr.setSize(500, 400);
         fr.setLocationRelativeTo(this);
         fr.setTitle("Details");
         fr.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
+        
+    }//GEN-LAST:event_jList1ValueChanged
+
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -216,8 +246,10 @@ public class studentFrame extends JFrame {
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JFrame studentFrame;

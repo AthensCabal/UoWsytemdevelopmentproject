@@ -95,8 +95,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
 
             //This creates a table
             s.execute(createTable);
-            
-           
+
             ps = conn.prepareStatement("INSERT INTO ScholarshipsList(Name,ID,Organisation,Description,Amount,maxAwardees,maxApplicants,initialCutOff,finalCutOff,Level,Division,Programme,waitList,recommendedList,acceptedList,rejectedList,CGPARequirements) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             //#Scholarships SQL INIT#
@@ -169,8 +168,8 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
                 default:
                     System.out.println("The program will continue to run but do note that none of the choice will work.");
                     break;
-                    */
-            
+             */
+
         }
 
     }
@@ -205,7 +204,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
             while (rs.next()) {
 
                 //Step 1: Check which of the rows matches the title
-                if (ScholarshipsID.equals(rs.getString("ID"))) {
+                if (ScholarshipsID.equals(rs.getString("ID").trim())) {
 
 //Name,ID,Organisation,Description,Amount,maxAwardees,maxApplicants,initialCuttOff,Level,Division,Programme,waitList,recommendedList,acceptedList,rejectedList,CGPARequirements
                     //Amount
@@ -584,11 +583,33 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
 
     }
 
+    public String[] getScholarshipsID() {
+
+        try {
+            PreparedStatement preparedS = conn.prepareStatement("SELECT ID FROM ScholarshipsList",ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            rs = preparedS.executeQuery();
+ 
+            int i = 0;
+            String grab ="";
+            String[] pass = null;
+            while (rs.next()) {
+                grab += rs.getString("ID").trim()+"\n";
+            }
+            pass = grab.split("\n");
+            
+            return pass;
+        } catch (Throwable ex) {
+            ex.printStackTrace(System.out);
+        }
+        return null;
+    }
+
     @Override
     public void cleanup() {
 
-         try {
-            
+        try {
+
             //deletes database          
             DatabaseMetaData dbmd = conn.getMetaData();
             ResultSet rs = dbmd.getTables(null, null, dbName.toUpperCase(), null);
@@ -599,7 +620,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
                 s.executeUpdate(sql);
 
             }
-            
+
             conn.close();
             s.close();
             ps.close();
