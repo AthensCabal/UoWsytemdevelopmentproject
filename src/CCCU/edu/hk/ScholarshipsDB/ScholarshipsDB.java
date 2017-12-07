@@ -147,12 +147,12 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
             } catch (Throwable e2) {
 
                 //
-                e2.printStackTrace(System.out);
+                //
             }
 
         } catch (Throwable e) {
 
-            e.printStackTrace(System.out);
+            //
             /*
             //When the server is off,prompt exit program
             System.out.println("Database could not be connected. Connect to the server and try again.");
@@ -346,8 +346,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
             }
 
         } catch (Throwable ex) {
-            System.out.println("Exception thrown at getScholarships():");
-            ex.printStackTrace(System.out);
+            //
         }
         //Never used! This will cause NullPointerException
         return null;
@@ -556,8 +555,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
             ps.executeUpdate();
 
         } catch (Throwable ex) {
-            System.out.println("Exception thrown at addScholarships():");
-            ex.printStackTrace(System.out);
+            //
         }
 
     }
@@ -580,8 +578,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
             }
         } catch (Throwable ex) {
 
-            System.out.println("Exception thrown at deleteScholarships()");
-            ex.printStackTrace(System.out);
+            //
 
         }
 
