@@ -234,6 +234,8 @@ public class studentFrame extends JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        scholarshipsDB.cleanup();
+        studentsDB.cleanup();
         dispose();
 
     }//GEN-LAST:event_jButton2ActionPerformed
