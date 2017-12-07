@@ -86,7 +86,6 @@ public class mainFrame extends JFrame {
         setBounds(new java.awt.Rectangle(0, 0, 770, 500));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new java.awt.Dimension(770, 500));
-        setPreferredSize(new java.awt.Dimension(847, 640));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cccu_logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/CCCU_logo.PNG"))); // NOI18N
@@ -104,7 +103,7 @@ public class mainFrame extends JFrame {
         studentLabel.setText("Students, please login here:");
         getContentPane().add(studentLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 170, 30));
 
-        student_eidLabel.setText("EID");
+        student_eidLabel.setText("Student ID");
         getContentPane().add(student_eidLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 80, 20));
 
         student_passwordLabel.setText("Password");
@@ -121,7 +120,7 @@ public class mainFrame extends JFrame {
         teacherLabel.setText("Teachers, please login here:");
         getContentPane().add(teacherLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 220, 170, 30));
 
-        teacher_eidLabel.setText("EID");
+        teacher_eidLabel.setText("Staff ID");
         getContentPane().add(teacher_eidLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 250, 70, 20));
 
         teacher_passwordLabel.setText("Password");
@@ -205,27 +204,42 @@ public class mainFrame extends JFrame {
     }//GEN-LAST:event_teacher_eidTextFieldActionPerformed
 
     private void student_loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_student_loginButtonActionPerformed
-        dispose();
+        //dispose();
         String ID = student_eidTextField.getText();
-        int IDparse = Integer.parseInt(ID);
-        char[] pass = jPasswordField1.getPassword();
-        Students grab = studentsDB.getStudent(ID);
-        
-        if (grab == null) {
-            JOptionPane.showMessageDialog(mainFrame,
+        int IDparse;
+        char[] pass = null;
+        Students grab = null;
+        boolean check = false;
+        boolean checkparse = true;
+        if (student_eidTextField.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Error!Empty Fields", "Error", JOptionPane.CLOSED_OPTION);
+        } else {
+            check = true;
+            try{
+            IDparse = Integer.parseInt(ID);
+            pass = jPasswordField1.getPassword();
+            grab = studentsDB.getStudent(ID);
+            } catch (NumberFormatException e){
+               checkparse = false;
+               JOptionPane.showMessageDialog(null, "Error!Empty Fields", "Error", JOptionPane.CLOSED_OPTION);
+            }
+        }
+
+        if (grab == null  && check== true && checkparse == true) {
+            JOptionPane.showMessageDialog(null,
                     "Wrong ID/and Password:",
                     "Login Error!",
                     JOptionPane.ERROR_MESSAGE);
         } else if (grab != null) {
             String passDB = grab.getPassword();
-            char [] passDBchar = passDB.toCharArray();
+            char[] passDBchar = passDB.toCharArray();
             if (Arrays.equals(pass, passDBchar)) {
-                //JOptionPane.showMessageDialog(mainFrame, "Successful!", "Login Message", JOptionPane.INFORMATION_MESSAGE);
-                stdFrame = new studentFrame(grab,studentsDB,scholarshipsDB);
+                //JOptionPane.showMessageDialog(null, "Successful!", "Login Message", JOptionPane.INFORMATION_MESSAGE);
+                stdFrame = new studentFrame(grab, studentsDB, scholarshipsDB);
                 stdFrame.setVisible(true);
             } else if (!(Arrays.equals(pass, passDBchar))) {
-                JOptionPane.showMessageDialog(mainFrame,
-                        "Wrong Password:"+passDB,
+                JOptionPane.showMessageDialog(null,
+                        "Wrong Password:" + passDB,
                         "Login Error!",
                         JOptionPane.ERROR_MESSAGE);
             }
@@ -233,27 +247,43 @@ public class mainFrame extends JFrame {
     }//GEN-LAST:event_student_loginButtonActionPerformed
 
     private void teacher_loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teacher_loginButtonActionPerformed
-        dispose();
+        //dispose();
         String ID = teacher_eidTextField.getText();
-        int IDparse = Integer.parseInt(ID);
-        char[] pass = jPasswordField2.getPassword();
-        Staff grab = staffDB.getStaff(ID);
+        int IDparse;
+        char[] pass = null;
+        Staff grab = null;
+        boolean check = false;
+        boolean checkparse = true;
         
-        if (grab == null) {
+         if (teacher_eidTextField.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Error!Empty Fields", "Error2", JOptionPane.CLOSED_OPTION);
+        } else {
+            check = true;
+            try{
+            IDparse = Integer.parseInt(ID);
+            pass = jPasswordField2.getPassword();
+            grab = staffDB.getStaff(ID);
+            } catch (NumberFormatException e){
+               checkparse = false;
+               JOptionPane.showMessageDialog(null, "Error!Empty Fields", "Error1", JOptionPane.CLOSED_OPTION);
+            }
+        }
+        
+        if (grab == null && check == true &&checkparse == true) {
             JOptionPane.showMessageDialog(mainFrame,
                     "Wrong ID/and Password:",
                     "Login Error!",
                     JOptionPane.ERROR_MESSAGE);
         } else if (grab != null) {
             String passDB = grab.getPassword();
-            char [] passDBchar = passDB.toCharArray();
+            char[] passDBchar = passDB.toCharArray();
             if (Arrays.equals(pass, passDBchar)) {
                 //JOptionPane.showMessageDialog(mainFrame, "Successful!", "Login Message", JOptionPane.INFORMATION_MESSAGE);
-                stfFrame = new staffFrame(grab,staffDB,scholarshipsDB);
+                stfFrame = new staffFrame(grab, staffDB, scholarshipsDB);
                 stfFrame.setVisible(true);
             } else if (!(Arrays.equals(pass, passDBchar))) {
                 JOptionPane.showMessageDialog(mainFrame,
-                        "Wrong Password:"+passDB,
+                        "Wrong Password:" + passDB,
                         "Login Error!",
                         JOptionPane.ERROR_MESSAGE);
             }

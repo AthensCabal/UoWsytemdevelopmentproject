@@ -7,7 +7,7 @@ package CCCU.edu.hk.Scholarships;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * Name:External_Scholarships Description:Attributes and methods of External
@@ -43,8 +43,8 @@ public class External_Scholarships implements Scholarships {
     private double Amount;
     private int maxAwardees;
     private int maxApplicants;
-    private Date initialCutOff;
-    private Date finalCutOff;
+    private Timestamp initialCutOff;
+    private Timestamp finalCutOff;
     private List<String> level;
     private List<String> division;
     private List<String> programme;
@@ -63,8 +63,8 @@ public class External_Scholarships implements Scholarships {
         Amount = -1.0;
         maxAwardees = -1;
         maxApplicants = -1;
-        initialCutOff = new Date();
-        finalCutOff = new Date();
+        initialCutOff = null;
+        finalCutOff = null;
         level = new ArrayList();
         division = new ArrayList();
         programme = new ArrayList();
@@ -76,7 +76,7 @@ public class External_Scholarships implements Scholarships {
 
     }
 
-    public External_Scholarships(String nam, String id, String org, String des, double amt, int maxAwd, int maxApp, Date ICO, Date FCO, List<String> lvl, List<String> div, List<String> prgm, List<String> wait, List<String> rec, List<String> acpt, List<String> rej, double cgpa) {
+    public External_Scholarships(String nam, String id, String org, String des, double amt, int maxAwd, int maxApp, Timestamp ICO, Timestamp FCO, List<String> lvl, List<String> div, List<String> prgm, List<String> wait, List<String> rec, List<String> acpt, List<String> rej, double cgpa) {
 
         name = nam;
         ID = id;
@@ -140,6 +140,7 @@ public class External_Scholarships implements Scholarships {
 
     }
 
+    @Override
     public String getOrganisation() {
 
         return organisation;
@@ -164,13 +165,13 @@ public class External_Scholarships implements Scholarships {
 
     }
 
-    public Date getInitialCutOff() {
+    public Timestamp getInitialCutOff() {
 
         return initialCutOff;
 
     }
 
-    public Date getFinalCutOff() {
+    public Timestamp getFinalCutOff() {
 
         return finalCutOff;
 
@@ -248,13 +249,13 @@ public class External_Scholarships implements Scholarships {
 
     }
 
-    public void setInitialCutOff(Date dd) {
+    public void setInitialCutOff(Timestamp dd) {
 
         initialCutOff = dd;
 
     }
 
-    public void finalCutOff(Date dd) {
+    public void finalCutOff(Timestamp dd) {
 
         finalCutOff = dd;
 

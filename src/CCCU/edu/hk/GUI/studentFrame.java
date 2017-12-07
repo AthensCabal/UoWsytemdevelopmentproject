@@ -1,9 +1,15 @@
 package CCCU.edu.hk.GUI;
 
 import CCCU.edu.hk.Accounts.Students;
+import CCCU.edu.hk.Scholarships.External_Scholarships;
+import CCCU.edu.hk.Scholarships.Internal_Scholarships;
+import CCCU.edu.hk.Scholarships.Scholarships;
 import CCCU.edu.hk.ScholarshipsDB.ScholarshipsDB;
 import CCCU.edu.hk.StudentsDB.StudentsDB;
+import java.util.List;
+import java.sql.Timestamp;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -16,15 +22,22 @@ import javax.swing.JFrame;
  */
 public class studentFrame extends JFrame {
 
-    Students loggedinStudents;
-    StudentsDB studentsDB;
-    ScholarshipsDB scholarshipsDB;
-    
+    private Students loggedinStudents;
+    private StudentsDB studentsDB;
+    private ScholarshipsDB scholarshipsDB;
+    private Scholarships schlr;
+    private Internal_Scholarships internal;
+    private External_Scholarships external;
+    private String IDSelect;
 
     public studentFrame(Students std, StudentsDB stdDB, ScholarshipsDB schlrDB) {
+        schlr = null;
+        internal = null;
+        external = null;
         loggedinStudents = std;
         studentsDB = stdDB;
         scholarshipsDB = schlrDB;
+        IDSelect = "";
         initComponents();
     }
 
@@ -159,6 +172,11 @@ public class studentFrame extends JFrame {
         });
 
         jButton4.setText("Apply");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = scholarshipsDB.getScholarshipsID();
@@ -221,18 +239,106 @@ public class studentFrame extends JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        String scholarshipID = jList1.getSelectedValue();
-        detailsFrame fr = new detailsFrame(scholarshipID,scholarshipsDB);
-        fr.setResizable(false);
-        fr.setSize(500, 400);
-        fr.setLocationRelativeTo(this);
-        fr.setTitle("Details");
-        fr.setVisible(true);
+        schlr = scholarshipsDB.getScholarship(IDSelect);
+        if (schlr instanceof Internal_Scholarships) {
+            internal = (Internal_Scholarships) schlr;
+            detailsFrame fr = new detailsFrame(internal);
+            fr.setResizable(false);
+            fr.setSize(500, 400);
+            fr.setLocationRelativeTo(this);
+            fr.setTitle("Details");
+            fr.setVisible(true);
+        } else if (schlr instanceof External_Scholarships) {
+            external = (External_Scholarships) schlr;
+            detailsFrame fr = new detailsFrame(external);
+            fr.setResizable(false);
+            fr.setSize(500, 400);
+            fr.setLocationRelativeTo(this);
+            fr.setTitle("Details");
+            fr.setVisible(true);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
-        
+        // TODO add your handling code here:
+        IDSelect = jList1.getSelectedValue().trim();
     }//GEN-LAST:event_jList1ValueChanged
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        schlr = scholarshipsDB.getScholarship(IDSelect);
+        if (schlr instanceof Internal_Scholarships) {
+            internal = (Internal_Scholarships) schlr;
+            Timestamp finalCut = internal.getFinalCutOff();
+            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+            if (currentTime.after(finalCut)) {
+                JOptionPane.showMessageDialog(null, "Error! Too Late", "Error!", JOptionPane.CLOSED_OPTION);
+            } else if (currentTime.before(finalCut)) {
+                Timestamp initialTime = internal.getInitialCutOff();
+                if (currentTime.after(initialTime)) {
+                    JOptionPane.showMessageDialog(null, "Warning! Past Initial Cut Off", "Warning!", JOptionPane.CLOSED_OPTION);
+                }
+                double CGPADB = internal.getCGPA();
+                double CGPASTD = loggedinStudents.getCGPA();
+                if (CGPADB > CGPASTD) {
+                    JOptionPane.showMessageDialog(null, "Error! CGPA does not meet requirements!", "Error!", JOptionPane.CLOSED_OPTION);
+                } else if (CGPADB == -1 || CGPASTD > CGPADB) {
+                    Internal_Scholarships tempScholarship = internal;
+                    Students tempSTD = loggedinStudents;
+                    int parse = tempSTD.getSID();
+                    String pass = Integer.toString(parse);
+                    tempScholarship.setWaitList(pass);
+                    tempSTD.setApplied(tempScholarship.getID());
+                    Scholarships passScholarships = tempScholarship;
+
+                    //Delete
+                    scholarshipsDB.deleteScholarship(internal.getID());
+                    int parse2 = loggedinStudents.getSID();
+                    String passDelete = Integer.toString(parse2);
+                    studentsDB.deleteStudent(passDelete);
+                    //add
+                    scholarshipsDB.addScholarship(passScholarships);
+                    studentsDB.addStudent(tempSTD);
+                }
+            }
+
+        } else if (schlr instanceof External_Scholarships) {
+            external = (External_Scholarships) schlr;
+            Timestamp finalCut = external.getFinalCutOff();
+            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+            if (currentTime.after(finalCut)) {
+                JOptionPane.showMessageDialog(null, "Error! Too Late", "Error!", JOptionPane.CLOSED_OPTION);
+            } else if (currentTime.before(finalCut)) {
+                Timestamp initialTime = external.getInitialCutOff();
+                if (currentTime.after(initialTime)) {
+                    JOptionPane.showMessageDialog(null, "Warning! Past Initial Cut Off", "Warning!", JOptionPane.CLOSED_OPTION);
+                }
+                double CGPADB = external.getCGPA();
+                double CGPASTD = loggedinStudents.getCGPA();
+                if (CGPADB > CGPASTD) {
+                    JOptionPane.showMessageDialog(null, "Error! CGPA does not meet requirements!", "Error!", JOptionPane.CLOSED_OPTION);
+                } else if (CGPADB == -1 || CGPASTD > CGPADB) {
+                    External_Scholarships tempScholarship = external;
+                    Students tempSTD = loggedinStudents;
+                    int parse = tempSTD.getSID();
+                    String pass = Integer.toString(parse);
+                    tempScholarship.setWaitList(pass);
+                    tempSTD.setApplied(tempScholarship.getID());
+                    Scholarships passScholarships = tempScholarship;
+
+                    //Delete
+                    scholarshipsDB.deleteScholarship(external.getID());
+                    int parse2 = loggedinStudents.getSID();
+                    String passDelete = Integer.toString(parse2);
+                    studentsDB.deleteStudent(passDelete);
+                    //add
+                    scholarshipsDB.addScholarship(passScholarships);
+                    studentsDB.addStudent(tempSTD);
+                }
+            }
+
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

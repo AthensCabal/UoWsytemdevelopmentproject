@@ -4,6 +4,7 @@ import CCCU.edu.hk.Scholarships.External_Scholarships;
 import CCCU.edu.hk.Scholarships.Internal_Scholarships;
 import CCCU.edu.hk.Scholarships.Scholarships;
 import CCCU.edu.hk.ScholarshipsDB.ScholarshipsDB;
+import java.sql.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,25 +21,30 @@ public class detailsFrame extends javax.swing.JFrame {
     /**
      * Creates new form detailsFrame
      */
-    private String ID;
-    private ScholarshipsDB scholarshipsDB;
-    private Scholarships scholarships; 
-    private External_Scholarships external;
+    private String print;
+    private String print2;
+    //private ScholarshipsDB scholarshipsDB;
+    //private Scholarships scholarships; 
     private Internal_Scholarships internal;
-    public detailsFrame(String id,ScholarshipsDB sDB) {
-        ID = id;
-        scholarshipsDB = sDB;
-        scholarships = scholarshipsDB.getScholarship(ID);
-        external = null;
-        internal =null;
-        if(scholarships instanceof Internal_Scholarships){
-        internal = (Internal_Scholarships)scholarships;
-        } else if(scholarships instanceof External_Scholarships){
-        external = (External_Scholarships)scholarships;
-        }
+    private External_Scholarships external;
+    
+    public detailsFrame(Internal_Scholarships internalPass) {
+        print = "";
+        print2 = "";
+        internal = internalPass;
+        print = "Name:"+internal.getName()+"\nOrganisation:"+internal.getOrganisation()+"\nDescription:"+internal.getDescription()+"\nDue date:" + internal.getInitialCutOff().toString()+"\nFinal CutOff Date"+internal.getFinalCutOff().toString()+"\nMax Awardees:" + internal.getMaxAwardees()+"\nMax Applicants:"+internal.getMaxApplicants()+"\nAmount:"+internal.getAmount();
+        print2 ="Early CutOff Date"+internal.getInitialCutOff().toString()+"\nFinal CutOff" + internal.getFinalCutOff().toString()+"\nCGPA Requirements:"+internal.getCGPA();
         initComponents();
     }
 
+    public detailsFrame(External_Scholarships externalPass){
+        print = "";
+        print2= "";
+        external = externalPass;
+        print = "Name:"+external.getName()+"\nOrganisation:"+external.getOrganisation()+"\nDescription:"+external.getDescription()+"\nDue date:" + external.getInitialCutOff().toString()+"\nFinal CutOff Date"+external.getFinalCutOff().toString()+"\nMax Awardees:" + external.getMaxAwardees()+"\nMax Applicants:"+external.getMaxApplicants()+"\nAmount:"+external.getAmount();
+        print2 ="Early CutOff Date"+external.getInitialCutOff().toString()+"\nFinal CutOff" + external.getFinalCutOff().toString()+"\nCGPA Requirements:"+external.getCGPA();
+        initComponents();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,13 +54,12 @@ public class detailsFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -71,42 +76,37 @@ public class detailsFrame extends javax.swing.JFrame {
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            if(external==null){
-                String[] strings = {"Name:"+internal.getName(), "Organisation:"+internal.getOrganisation(), "Description:"+internal.getDescription(), "Due date:" + internal.getInitialCutOff().toString(), "Final CutOff Date"+internal.getFinalCutOff().toString(),"Max Awardees:" + internal.getMaxAwardees(),"Max Applicants:"+internal.getMaxApplicants(),"Amount:"internal.getAmount()};
-                public int getSize() { return strings.length; }
-                public String getElementAt(int i) { return strings[i]; }
-            } else if(internal==null){
-                String[] strings = {"Name:"+external.getName(), "Organisation:"+external.getOrganisation(), "Description:"+external.getDescription(), "Due date:" + external.getInitialCutOff().toString(), "Final CutOff Date"+external.getFinalCutOff().toString(),"Max Awardees:" + external.getMaxAwardees(),"Max Applicants:"+external.getMaxApplicants(),"Amount:"external.getAmount()};
-                public int getSize() { return strings.length; }
-                public String getElementAt(int i) { return strings[i]; }
-            }
-        });
-
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = print.split("\n");
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane3.setViewportView(jList2);
+        jScrollPane2.setViewportView(jList1);
+
+        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = print2.split("\n");
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jList2);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -128,6 +128,5 @@ public class detailsFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
 }

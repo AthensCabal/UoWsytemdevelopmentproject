@@ -48,9 +48,6 @@
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[770, 500]"/>
     </Property>
-    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[847, 640]"/>
-    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -119,7 +116,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="student_eidLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="EID"/>
+        <Property name="text" type="java.lang.String" value="Student ID"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -162,7 +159,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="teacher_eidLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="EID"/>
+        <Property name="text" type="java.lang.String" value="Staff ID"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

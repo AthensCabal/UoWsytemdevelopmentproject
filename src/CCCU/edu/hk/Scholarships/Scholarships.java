@@ -19,12 +19,15 @@ public interface Scholarships {
     
     public String getDescription();
     
+    public String getOrganisation();
+    
     //Returns a list(Strings) of level(s) of studies that is/are eligble for it
     public List<String> getLevelApplicable();
     //Returns a list(Strings) of division that are eligble for it
     public List<String> getDivisionApplicable();
     //Returns a list(Strings) of programmes that are eligble for it
     public List<String> getProgrammeApplicable();
+    
     
     
 }

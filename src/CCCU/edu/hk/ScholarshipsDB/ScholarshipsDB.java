@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Arrays;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -53,8 +53,8 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
             + "Amount VARCHAR(256) NOT NULL, "
             + "maxAwardees VARCHAR(256) NOT NULL, "
             + "maxApplicants VARCHAR(256) NOT NULL, "
-            + "initialCutOff VARCHAR(256) NOT NULL, "
-            + "finalCutOff VARCHAR(256) NOT NULL, "
+            + "initialCutOff TIMESTAMP NOT NULL, "
+            + "finalCutOff TIMESTAMP NOT NULL, "
             + "Level VARCHAR(256) NOT NULL, "
             + "Division VARCHAR(256) NOT NULL, "
             + "Programme VARCHAR(256) NOT NULL, "
@@ -130,8 +130,17 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
                         ps.setString(5, element1.getElementsByTagName("Amount").item(0).getTextContent().trim());
                         ps.setString(6, element1.getElementsByTagName("maxAwardees").item(0).getTextContent().trim());
                         ps.setString(7, element1.getElementsByTagName("maxApplicants").item(0).getTextContent().trim());
-                        ps.setString(8, element1.getElementsByTagName("initialCutOff").item(0).getTextContent().trim());
-                        ps.setString(9, element1.getElementsByTagName("finalCutOff").item(0).getTextContent().trim());
+                        
+                        //ps.setTimeStamp(8, element1.getElementsByTagName("initialCutOff").item(0).getTextContent().trim());
+                        String parseIntDate = element1.getElementsByTagName("initialCutOff").item(0).getTextContent().trim();
+                        Timestamp intDate =  Timestamp.valueOf(parseIntDate);
+                        ps.setTimestamp(8, intDate);
+                        
+                        String parseFinalDate = element1.getElementsByTagName("finalCutOff").item(0).getTextContent().trim();
+                        Timestamp finalDate = Timestamp.valueOf(parseFinalDate);
+                        ps.setTimestamp(9, finalDate);
+                        //ps.setString(9, element1.getElementsByTagName("finalCutOff").item(0).getTextContent().trim());
+                        
                         ps.setString(10, element1.getElementsByTagName("Level").item(0).getTextContent().trim());
                         ps.setString(11, element1.getElementsByTagName("Division").item(0).getTextContent().trim());
                         ps.setString(12, element1.getElementsByTagName("Programme").item(0).getTextContent().trim());
@@ -218,31 +227,14 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
                     int maxApplicantsPass = Integer.parseInt(maxApplicants);
 
                     //Initial Date CutOff
-                    String dateInitial = rs.getString("initalCutOff");
-                    String[] tempDateInitial = dateInitial.split(" ");
-                    int[] intDateInitial = null;
-                    for (int i = 0; i < tempDateInitial.length; i++) {
-                        tempDateInitial[i] = tempDateInitial[i].trim();
-                    }
-                    for (int k = 0; k < tempDateInitial.length; k++) {
-                        intDateInitial[k] = Integer.parseInt(tempDateInitial[k]);
-                    }
-                    Date passInitialDate = new Date(intDateInitial[0], intDateInitial[1], intDateInitial[2]);
+                    Timestamp dateInitial = rs.getTimestamp("initialCutOff");
+
 
                     //Final Date CutOff
-                    String dateFinal = rs.getString("finalCutOff");
-                    String[] tempDateFinal = dateFinal.split(" ");
-                    int[] intDateFinal = null;
-                    for (int i = 0; i < tempDateFinal.length; i++) {
-                        tempDateFinal[i] = tempDateFinal[i].trim();
-                    }
-                    for (int k = 0; k < tempDateFinal.length; k++) {
-                        intDateFinal[k] = Integer.parseInt(tempDateFinal[k]);
-                    }
-                    Date passFinalDate = new Date(intDateFinal[0], intDateFinal[1], intDateFinal[2]);
+                    Timestamp dateFinal = rs.getTimestamp("finalCutOff");                    
 
                     //CGPA
-                    String CGPAString = rs.getString("CGPA");
+                    String CGPAString = rs.getString("CGPARequirements");
                     Double CGPAPass = Double.parseDouble(CGPAString);
 
                     //Level
@@ -305,8 +297,8 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
                                 amtPass,
                                 maxAwardeesPass,
                                 maxApplicantsPass,
-                                passInitialDate,
-                                passFinalDate,
+                                dateInitial,
+                                dateFinal,
                                 passLevel,
                                 passDiv,
                                 passPrgm,
@@ -326,8 +318,8 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
                                 amtPass,
                                 maxAwardeesPass,
                                 maxApplicantsPass,
-                                passInitialDate,
-                                passFinalDate,
+                                dateInitial,
+                                dateFinal,
                                 passLevel,
                                 passDiv,
                                 passPrgm,
@@ -384,13 +376,11 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
                 ps.setString(7, String.valueOf(maxAppString));
 
                 //initialCutOff
-                Date initialCutOff = ex.getInitialCutOff();
-                String dateInitialString = initialCutOff.toString();
-                ps.setString(8, String.valueOf(dateInitialString));
+                Timestamp initialCutOff = ex.getInitialCutOff();
+                ps.setTimestamp(8, initialCutOff);
                 //finaCutOff
-                Date finaCutOff = ex.getFinalCutOff();
-                String finaCutOffString = finaCutOff.toString();
-                ps.setString(9, String.valueOf(finaCutOffString));
+                Timestamp finalCutOff = ex.getFinalCutOff();
+                ps.setTimestamp(9, finalCutOff);
 
                 //maxAwardees,maxApplicants,initialCutOff,finalCutOff,Level,Division,Programme
 //waitList,recommendedList,acceptedList,rejectedList,CGPARequirements
@@ -477,11 +467,11 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
                 ps.setString(7, String.valueOf(maxAppString));
 
                 //initialCutOff
-                Date initialCutOff = ex.getInitialCutOff();
+                Timestamp initialCutOff = ex.getInitialCutOff();
                 String dateInitialString = initialCutOff.toString();
                 ps.setString(8, String.valueOf(dateInitialString));
                 //finaCutOff
-                Date finaCutOff = ex.getFinalCutOff();
+                Timestamp finaCutOff = ex.getFinalCutOff();
                 String finaCutOffString = finaCutOff.toString();
                 ps.setString(9, String.valueOf(finaCutOffString));
 
