@@ -179,7 +179,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
         int size = 0;
         try {
 
-            s.executeQuery("select ScholarshipsID from ScholarshipsList");
+            s.executeQuery("select ID from ScholarshipsList");
             rs = s.getResultSet();
             while (rs.next()) {
                 size++;
