@@ -15,8 +15,14 @@ import javax.swing.JFrame;
  * @author Cheng
  */
 public class studentFrame extends JFrame {
+    Students loggedinStudents;
+    StudentsDB studentsDB;
+    ScholarshipsDB scholarshipsDB;
     public studentFrame(Students std, StudentsDB stdDB, ScholarshipsDB schlrDB) {
         initComponents();
+        loggedinStudents = std;
+        studentsDB = stdDB;
+        scholarshipsDB = schlrDB;
     }
     public void jInternalFrame1(){
         
@@ -42,15 +48,11 @@ public class studentFrame extends JFrame {
         jPanel2 = new javax.swing.JPanel();
         testing = new java.awt.Label();
         jButton3 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
         jButton4 = new javax.swing.JButton();
 
         studentFrame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         studentFrame.setBounds(new java.awt.Rectangle(0, 0, 835, 600));
-        studentFrame.setMaximumSize(new java.awt.Dimension(835, 600));
         studentFrame.setMinimumSize(new java.awt.Dimension(835, 600));
-        studentFrame.setPreferredSize(new java.awt.Dimension(835, 600));
         studentFrame.setResizable(false);
 
         javax.swing.GroupLayout studentFrameLayout = new javax.swing.GroupLayout(studentFrame.getContentPane());
@@ -149,13 +151,6 @@ public class studentFrame extends JFrame {
             }
         });
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
-
         jButton4.setText("Apply");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -164,9 +159,7 @@ public class studentFrame extends JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(testing, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                .addComponent(testing, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -179,13 +172,10 @@ public class studentFrame extends JFrame {
                 .addContainerGap()
                 .addComponent(testing, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(258, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Scholarships", jPanel2);
@@ -226,10 +216,8 @@ public class studentFrame extends JFrame {
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JFrame studentFrame;

@@ -48,7 +48,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
 //,recommendedList,acceptedList,rejectedList,CGPARequirements
     String createTable = "CREATE TABLE ScholarshipsList (Name VARCHAR(256) NOT NULL, "
             + "ID VARCHAR(256) NOT NULL, "
-            + "Oragnisation VARCHAR(256) NOT NULL, "
+            + "Organisation VARCHAR(256) NOT NULL, "
             + "Description VARCHAR(256) NOT NULL, "
             + "Amount VARCHAR(256) NOT NULL, "
             + "maxAwardees VARCHAR(256) NOT NULL, "
@@ -95,7 +95,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
 
             //This creates a table
             s.execute(createTable);
-          
+            
            
             ps = conn.prepareStatement("INSERT INTO ScholarshipsList(Name,ID,Organisation,Description,Amount,maxAwardees,maxApplicants,initialCutOff,finalCutOff,Level,Division,Programme,waitList,recommendedList,acceptedList,rejectedList,CGPARequirements) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
@@ -121,7 +121,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
                     //this is for checking if it is an element
                     if (node.getNodeType() == Node.ELEMENT_NODE) {
 
-                        //Name,ID,Organisation,Description,Amount,maxAwardees,maxApplicants,initialCuttOff,Level,Division,Programme,waitList,recommendedList,acceptedList,rejectedList,CGPARequirements
+                        //Name,ID,Organisation,Description,Amount,maxAwardees,maxApplicants,initialCutOff,Level,Division,Programme,waitList,recommendedList,acceptedList,rejectedList,CGPARequirements
                         //$$$$$$$$$$$$$$$$$$$$
                         Element element1 = (Element) node;
                         ps.setString(1, element1.getElementsByTagName("Name").item(0).getTextContent().trim());
@@ -147,11 +147,12 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
             } catch (Throwable e2) {
 
                 //
-
+                e2.printStackTrace(System.out);
             }
 
         } catch (Throwable e) {
 
+            e.printStackTrace(System.out);
             /*
             //When the server is off,prompt exit program
             System.out.println("Database could not be connected. Connect to the server and try again.");
@@ -365,7 +366,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
             ps = conn.prepareStatement("INSERT INTO ScholarshipsList(Name,ID,Organisation,Description,Amount,maxAwardees,maxApplicants,initialCutOff,finalCutOff,Level,Division,Programme,waitList,recommendedList,acceptedList,rejectedList,CGPARequirements) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             if (tempScholarships instanceof External_Scholarships) {
-                Internal_Scholarships ex = (Internal_Scholarships) tempScholarships;
+                External_Scholarships ex = (External_Scholarships) tempScholarships;
 
                 ps.setString(1, String.valueOf(ex.getName()));
                 ps.setString(2, String.valueOf(ex.getID()));
@@ -458,7 +459,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
                 String CGPAPass = Double.toString(CGPA);
                 ps.setString(17, String.valueOf(CGPAPass));
             } else if (tempScholarships instanceof Internal_Scholarships) {
-                External_Scholarships ex = (External_Scholarships) tempScholarships;
+                Internal_Scholarships ex = (Internal_Scholarships) tempScholarships;
 
                 ps.setString(1, String.valueOf(ex.getName()));
                 ps.setString(2, String.valueOf(ex.getID()));
@@ -586,6 +587,7 @@ public class ScholarshipsDB implements ScholarshipsDB_Interface {
 
     }
 
+    @Override
     public void cleanup() {
 
          try {
