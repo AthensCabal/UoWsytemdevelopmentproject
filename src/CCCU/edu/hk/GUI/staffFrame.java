@@ -1,7 +1,12 @@
 package CCCU.edu.hk.GUI;
+
 import CCCU.edu.hk.Accounts.Staff;
+import CCCU.edu.hk.Scholarships.External_Scholarships;
+import CCCU.edu.hk.Scholarships.Internal_Scholarships;
+import CCCU.edu.hk.Scholarships.Scholarships;
 import CCCU.edu.hk.ScholarshipsDB.ScholarshipsDB;
 import CCCU.edu.hk.StaffDB.StaffDB;
+import static java.lang.System.exit;
 import javax.swing.JFrame;
 
 /*
@@ -9,14 +14,29 @@ import javax.swing.JFrame;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Cheng
  */
 public class staffFrame extends JFrame {
-       public staffFrame(Staff stf, StaffDB stdDB, ScholarshipsDB schlrDB) {
-        initComponents();    
+
+    private Staff staff;
+    private StaffDB staffDB;
+    private ScholarshipsDB scholarshipsDB;
+    private Scholarships schlr;
+    private Internal_Scholarships internal;
+    private External_Scholarships external;
+    private String IDSelect;
+
+    public staffFrame(Staff stf, StaffDB stdDB, ScholarshipsDB schlrDB) {
+        schlr = null;
+        internal = null;
+        external = null;
+        staff = stf;
+        staffDB = stdDB;
+        scholarshipsDB = schlrDB;
+        IDSelect = "";
+        initComponents();
     }
 
     /**
@@ -36,9 +56,14 @@ public class staffFrame extends JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jTabbedPane2 = new javax.swing.JTabbedPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jLabel3 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        testing = new java.awt.Label();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList2 = new javax.swing.JList<>();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         staffFrame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,17 +142,79 @@ public class staffFrame extends JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 80));
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
+
+        testing.setBackground(new java.awt.Color(204, 204, 204));
+        testing.setFont(new java.awt.Font("新細明體", 0, 12)); // NOI18N
+        testing.setText("Scholarship Management");
+
+        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = scholarshipsDB.getScholarshipsID();
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jList2.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jList2ValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jList2);
 
-        jTabbedPane2.addTab("Scholarship In Charge", jScrollPane1);
+        jButton3.setText("Details");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setText("jLabel3");
-        jTabbedPane2.addTab("View Details", jLabel3);
+        jButton4.setText("Add Scholarship");
+
+        jButton5.setText("Process Application");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Remove Scholarship");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2)
+                    .addComponent(testing, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE))
+                .addGap(56, 56, 56)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(59, 59, 59))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(testing, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Scholarships", jPanel2);
 
         getContentPane().add(jTabbedPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 830, 520));
 
@@ -142,26 +229,59 @@ public class staffFrame extends JFrame {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        schlr = scholarshipsDB.getScholarship(IDSelect);
+        if (schlr instanceof Internal_Scholarships) {
+            internal = (Internal_Scholarships) schlr;
+            detailsFrame fr = new detailsFrame(internal);
+            fr.setResizable(false);
+            fr.setSize(500, 400);
+            fr.setLocationRelativeTo(this);
+            fr.setTitle("Details");
+            fr.setVisible(true);
+        } else if (schlr instanceof External_Scholarships) {
+            external = (External_Scholarships) schlr;
+            detailsFrame fr = new detailsFrame(external);
+            fr.setResizable(false);
+            fr.setSize(500, 400);
+            fr.setLocationRelativeTo(this);
+            fr.setTitle("Details");
+            fr.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jList2ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList2ValueChanged
+        // TODO add your handling code here:
+        IDSelect = jList2.getSelectedValue().trim();
+    }//GEN-LAST:event_jList2ValueChanged
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
-
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> jList2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JFrame staffFrame;
+    private java.awt.Label testing;
     // End of variables declaration//GEN-END:variables
 
-    
 }
